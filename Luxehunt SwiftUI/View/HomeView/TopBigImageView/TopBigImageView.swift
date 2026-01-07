@@ -7,12 +7,28 @@
 
 import SwiftUI
 
-struct TopBigImageView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+    struct TopBigImageView: View {
+        
+        let images = ["BigBanner", "BigBanner", "BigBanner", "BigBanner"]
+        
+        var body: some View {
+            TabView {
+                ForEach(images, id: \.self) { image in
+                    Image(image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 490)
+                        .clipped()
+                }
+            }
+            .frame(height: 490)
+            .tabViewStyle(.page(indexDisplayMode: .automatic))
+        }
     }
-}
 
 #Preview {
     TopBigImageView()
 }
+

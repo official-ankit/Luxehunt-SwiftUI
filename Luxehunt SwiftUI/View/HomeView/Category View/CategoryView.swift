@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct CategoryView: View {
+    @State var lblCtaegoryName:String = "Shoes"
+    @State var imgCategory:String = "CategoryShoes"
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Image(imgCategory)
+        }.frame(height: 214)
+        .overlay{
+            Text(lblCtaegoryName)
+                .font(.custom("PlayfairDisplay-Black", size: 20))
+        }
     }
 }
 

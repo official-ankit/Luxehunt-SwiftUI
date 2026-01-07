@@ -8,8 +8,47 @@
 import SwiftUI
 
 struct TrendingDealView: View {
+    @State var lblBrandName = "Addidas"
+    @State var lblBrandText = "Java "
+    @State var lblOfferPrice = "783 "
+    @State var lblPrice = "602 "
+    @State var lblDiscount = "20 "
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack(alignment: .leading){
+            VStack(alignment: .leading, spacing: 0){
+                
+                Image("TrendingDeal").resizable()
+                    .frame(height: 184)
+                VStack(alignment:.leading){
+                    Text(lblBrandName)
+                        .font(.custom("PlayfairDisplay-Black", size: 20))
+                        .foregroundColor(.red)
+                         
+                    Text(lblBrandText)
+                        .font(.custom("PlayfairDisplay-Black", size: 15))
+                         
+                    HStack(spacing: 5){
+                        Text(lblOfferPrice)
+                            .font(.custom("PlayfairDisplay-Black", size: 12))
+                            .foregroundColor(.gray)
+                        Text(lblPrice)
+                            .font(.custom("PlayfairDisplay-Black", size: 12))
+                        Text(lblDiscount)
+                            .font(.custom("PlayfairDisplay-Black", size: 12))
+                        
+                    }
+                    
+                }.padding(.horizontal,10)
+            }.padding(.top,0)
+                .padding(.bottom, 10)
+                
+        }.cornerRadius(16)
+            .overlay {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.gray, lineWidth: 1)
+            }.shadow(radius: 4)
+            
+
     }
 }
 

@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0B2F6E892F0CE49E00EBCE5F /* Info.plist .plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B2F6E882F0CE49E00EBCE5F /* Info.plist .plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		0B2F6E882F0CE49E00EBCE5F /* Info.plist .plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist .plist"; sourceTree = "<group>"; };
 		0BA4F0ED2F0BC5CA00584585 /* Luxehunt SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Luxehunt SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -32,6 +37,7 @@
 		0BA4F0E42F0BC5CA00584585 = {
 			isa = PBXGroup;
 			children = (
+				0B2F6E882F0CE49E00EBCE5F /* Info.plist .plist */,
 				0BA4F0EF2F0BC5CA00584585 /* Luxehunt SwiftUI */,
 				0BA4F0EE2F0BC5CA00584585 /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B2F6E892F0CE49E00EBCE5F /* Info.plist .plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct HeaderLabel: View {
+    @State var headerLabel:String = "Trending Deal"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack{
+          Text(headerLabel)
+            Spacer()
+        }
+            .padding(.vertical, 10)
+        
     }
 }
 

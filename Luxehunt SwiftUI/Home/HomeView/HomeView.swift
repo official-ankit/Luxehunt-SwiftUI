@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    var homeViewModel = HomeViewModel()
+    @StateObject var homeViewModel = HomeViewModel()
+    let categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
+    
     
     let columns = [
         GridItem(.flexible()),
@@ -58,7 +60,7 @@ struct HomeView: View {
                         }
                       
                         HeaderLabel(headerLabel: "Shop by category")
-                        if homeViewModel.categoryModel.isEmpty {
+                        if (homeViewModel.categoryModel.isEmpty ){
                             ProgressView()
                         } else {
                             LazyVGrid(columns: columns, spacing: 5) {
@@ -81,6 +83,6 @@ struct HomeView: View {
 }
 
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}

@@ -58,26 +58,38 @@ class AppServerClient {
     
     
     func getApi<T: Decodable>(url: String, success: @escaping (T) -> Void, failure: ((String?) -> Void)?) {
-            let headers: HTTPHeaders = [
-                "Authorization": UserDefaultsManager.shared.accessToken,
-                "Content-Type": "application/json"
-            ]
-            
-            let urlWithBase = "\(baseURL)\(url)"
-            
-            AF.request(urlWithBase, method: .get, headers: headers)
-                .validate()
-                .responseDecodable(of: T.self) { response in
-                    switch response.result {
-                    case .success(let result):
-                        success(result)
-                    case .failure(let error):
-                        failure?(error.localizedDescription)
-                        print("Failure")
-                    }
+        let headers: HTTPHeaders = [
+            "Authorization": UserDefaultsManager.shared.accessToken,
+            "Content-Type": "application/json"
+        ]
+        
+        let urlWithBase = "\(baseURL)\(url)"
+        
+        // Custom decoder with snake_case support
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+        AF.request(urlWithBase, method: .get, headers: headers)
+            .validate()
+            .responseData { response in
+                // Print raw body for debugging
+                if let data = response.data, let body = String(data: data, encoding: .utf8) {
+                    print("GET \(urlWithBase) raw response:\n\(body)")
                 }
-        }
+                switch response.result {
+                case .success(let data):
+                    do {
+                        let result = try decoder.decode(T.self, from: data)
+                        success(result)
+                    } catch {
+                        failure?("Response could not be decoded because of error:\n\(error.localizedDescription)")
+                        print("Decoding error: \(error)")
+                    }
+                case .failure(let error):
+                    failure?(error.localizedDescription)
+                    print("Failure")
+                }
+            }
+    }
 
 }
-
-

@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CategoryView: View {
+
     let category: CategoryModel
+   
     
     @State var lblCtaegoryName:String = "Shoes"
     @State var imgCategory:String = "CategoryShoes"
@@ -16,13 +18,11 @@ struct CategoryView: View {
     
     var body: some View {
         VStack{
-            Image(imgCategory)
+            Image(lblCtaegoryName)
         }.frame(height: 214)
         .overlay{
-            Text(category.name ?? "")
+            Text(category.name)
                 .font(.custom("PlayfairDisplay-Black", size: 20))
         }
     }
 }
-
-

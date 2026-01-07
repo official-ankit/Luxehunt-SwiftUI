@@ -19,13 +19,20 @@ class HomeViewModel: ObservableObject {
 
     func fetchCategories() {
         isLoading = true
-        apiClient.getApi(url: Constants.api_category) { (responseJSON:CategoryResponse) in
-            print(responseJSON)
-        } failure: { error in
-            print(error)
-        }
 
-        
+        apiClient.getApi(url: Constants.api_category) { (envelope: CategoryListEnvelope) in
+            DispatchQueue.main.async {
+                // Optionally, you could check envelope.error here.
+                self.categoryModel = envelope.data.category
+                self.isLoading = false
+                self.errorMessage = nil
+            }
+        } failure: { error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+                self.errorMessage = error
+            }
+        }
     }
 }
 

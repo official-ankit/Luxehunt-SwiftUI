@@ -52,6 +52,6 @@ struct TrendingDealView: View {
     }
 }
 
-#Preview {
-    TrendingDealView()
-}
+//#Preview {
+//    TrendingDealView()
+//}

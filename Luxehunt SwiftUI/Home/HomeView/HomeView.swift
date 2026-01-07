@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
-    let categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
+    
+    @State var categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
     
     
     let columns = [
@@ -28,9 +29,9 @@ struct HomeView: View {
                         HeaderLabel(headerLabel: "Top Trending")
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
-                                ForEach(0..<10) { _ in
-                                    TrendingDealView()
-                                }
+                                ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
+                                    TrendingDealView(lblBrandName: topTrendingData.product.brand ?? "")
+                                }                              
                             }
                             .padding(.leading, 0)
                         }
@@ -64,20 +65,30 @@ struct HomeView: View {
                             ProgressView()
                         } else {
                             LazyVGrid(columns: columns, spacing: 5) {
-//                                ForEach(homeViewModel.categoryModel, id: \.id) { category in
-//                                    CategoryView(category: category)
-//                                }
+                                ForEach(Array(homeViewModel.categoryModel.enumerated()),
+                                        id: \.element.id) { index, category in
+                                    let imageName = categoryImage.indices.contains(index)
+                                        ? categoryImage[index]
+                                        : "CategoryAccessories"
+                                    CategoryView(
+                                        category: category,
+                                        imgCategory: imageName
+                                    )
+                                }
                             }
-                        }
 
-//                        .padding(.horizontal, 5)
+                            
+                        }
                     }
                 }
             }.padding(.top,20).edgesIgnoringSafeArea(.top)
                 .padding(.horizontal,20)
         }
         .onAppear{
+            homeViewModel.fetchTopTrendingProducts()
             homeViewModel.fetchCategories()
+            
+           
         }
     }
 }

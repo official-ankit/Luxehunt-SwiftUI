@@ -16,6 +16,8 @@ class HomeViewModel: ObservableObject {
     @Published var categoryModel: [CategoryModel] = []
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
+    @Published var topTrendingProducts: [DataItem] = []
+    @Published var isLoadingTopTrending = false
 
     func fetchCategories() {
         isLoading = true
@@ -34,6 +36,23 @@ class HomeViewModel: ObservableObject {
             }
         }
     }
+    
+    func fetchTopTrendingProducts() {
+            isLoadingTopTrending = true
+
+        apiClient.getApi(url: Constants.api_top_trending, success: { (response: TopTrendingModel) in
+                DispatchQueue.main.async {
+                    self.topTrendingProducts = response.data
+                    print(self.topTrendingProducts)
+                    self.isLoadingTopTrending = false
+                }
+            }, failure: { error in
+                DispatchQueue.main.async {
+                    self.errorMessage = error
+                    self.isLoadingTopTrending = false
+                }
+            })
+        }
 }
 
 

@@ -8,21 +8,17 @@
 import Foundation
 
 
-struct CategoryModel: Codable {
-    let id, name: String
-    let v: Int?
-    let index: Double
+struct CategoryModel: Decodable, Identifiable {
+    let id: String
+    let name: String
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case name
-        case v = "__v"
-        case index
     }
 }
 
-struct CategoryResponse: Codable {
-    let error: Bool?
-    let data: [CategoryModel]
+// MARK: - CategoryData
+struct CategoryResponse: Decodable {
+    let category: [CategoryModel]
 }
-

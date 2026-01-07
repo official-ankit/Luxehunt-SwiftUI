@@ -54,31 +54,7 @@ class AppServerClient {
                 }
         }
     }
-    func apiforGet(url: String, method: HTTPMethod, success: @escaping (JSON) -> Void, failure: ((String?) -> Void)?) -> Void {
 
-        let headers: HTTPHeaders = [
-            "Authorization": UserDefaultsManager.shared.accessToken//,
-//            "Content-Type": "application/json"
-        ]
-        let urlWithBase = "\(baseURL)\(url)"
-        AF.request(urlWithBase, method: method, encoding: JSONEncoding.default, headers: headers)
-            .validate()
-            .responseJSON { response in
-                guard let data = response.data else {
-                    failure?("Failed to get data")
-                    //showAlert(with: "Failed", message: "Failed to get data")
-                    return
-                }
-                let json = JSON(data)
-                switch response.result {
-                case .success:
-                    success(json)
-                case .failure( _):
-                    let responseDict = (json.rawValue) as? Dictionary<String,AnyObject>
-                    failure?(((responseDict?["error"]?["message"] ?? "some error") as? String) ?? "error")
-                }
-        }
-    }
     
     
     func getApi<T: Decodable>(url: String, success: @escaping (T) -> Void, failure: ((String?) -> Void)?) {

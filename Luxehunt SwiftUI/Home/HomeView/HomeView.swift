@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    var homeViewModel = HomeViewModel()
     
     let columns = [
         GridItem(.flexible()),
@@ -57,16 +58,24 @@ struct HomeView: View {
                         }
                       
                         HeaderLabel(headerLabel: "Shop by category")
-                        LazyVGrid(columns: columns, spacing: 5) {
-                            ForEach(0..<20) { _ in
-                                CategoryView()
+                        if homeViewModel.categoryModel.isEmpty {
+                            ProgressView()
+                        } else {
+                            LazyVGrid(columns: columns, spacing: 5) {
+//                                ForEach(homeViewModel.categoryModel, id: \.id) { category in
+//                                    CategoryView(category: category)
+//                                }
                             }
                         }
-                        .padding(.horizontal, 5)
+
+//                        .padding(.horizontal, 5)
                     }
                 }
             }.padding(.top,20).edgesIgnoringSafeArea(.top)
                 .padding(.horizontal,20)
+        }
+        .onAppear{
+            homeViewModel.fetchCategories()
         }
     }
 }

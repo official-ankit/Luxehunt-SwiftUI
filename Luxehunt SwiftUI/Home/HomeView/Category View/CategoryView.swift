@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CategoryView: View {
+    let category: CategoryModel
+    
     @State var lblCtaegoryName:String = "Shoes"
     @State var imgCategory:String = "CategoryShoes"
     
@@ -17,12 +19,10 @@ struct CategoryView: View {
             Image(imgCategory)
         }.frame(height: 214)
         .overlay{
-            Text(lblCtaegoryName)
+            Text(category.name ?? "")
                 .font(.custom("PlayfairDisplay-Black", size: 20))
         }
     }
 }
 
-#Preview {
-    CategoryView()
-}
+

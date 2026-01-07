@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic-product-share.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

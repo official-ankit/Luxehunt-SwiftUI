@@ -31,28 +31,33 @@ struct HomeView: View {
                             HStack(spacing: 12) {
                                 ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
                                     TrendingDealView(lblBrandName: topTrendingData.product.brand ?? "")
-                                }                              
+                                }
                             }
                             .padding(.leading, 0)
                         }
                         HeaderLabel(headerLabel: "Shop by feed")
                         HStack(spacing: 5) {
-                            Image("AllDeals")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(maxWidth: .infinity)
-                                .clipped()
-                                .overlay(){
-                                    ZStack{
-                                        Color.appColorAllDealsBg
-                                        HStack{
-                                            Image(systemName: "person.2")
-                                            Text("Created Deals")
-                                                .font(.custom("PlayfairDisplay-Black", size: 12))
-                                        }
-                                    }.frame(height: 44)
-                                        .padding(.horizontal, 10)
-                                }
+                          NavigationLink(destination: {
+                              AllDealsView().navigationBarBackButtonHidden()
+                          }, label: {
+                              Image("AllDeals")
+                                  .resizable()
+                                  .scaledToFill()
+                                  .frame(maxWidth: .infinity)
+                                  .clipped()
+                                  .overlay(){
+                                      ZStack{
+                                          Color.appColorAllDealsBg
+                                          HStack{
+                                              Image(systemName: "person.2")
+                                              Text("Created Deals")
+                                                  .font(.custom("PlayfairDisplay-Black", size: 12))
+                                          }
+                                      }.frame(height: 44)
+                                          .padding(.horizontal, 10)
+                                  }
+                          })
+                            
                             Image("AllDeals")
                                 .resizable()
                                 .scaledToFill()

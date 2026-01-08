@@ -30,7 +30,8 @@ struct HomeView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
                                 ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
-                                    TrendingDealView(lblBrandName: topTrendingData.product.brand ?? "")
+                                    
+                                    TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "")
                                 }
                             }
                             .padding(.leading, 0)

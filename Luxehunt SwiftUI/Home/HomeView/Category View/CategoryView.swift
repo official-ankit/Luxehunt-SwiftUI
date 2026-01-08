@@ -13,16 +13,29 @@ struct CategoryView: View {
     let imgCategory: String
 
     var body: some View {
-        VStack{
-            Image(imgCategory).resizable()
-                .scaledToFill()
-                .frame(height: 214)
-                .clipped()
-                .opacity(0.5)
-        }
+        ZStack{
+            VStack{
+                Image(imgCategory).resizable()
+                    .scaledToFill()
+                    .frame(height: 214)
+                    .clipped()
+                
+            }
+            
+            Color.black.opacity(0.5)
+             } .onAppear {
+                 for family in UIFont.familyNames.sorted() {
+                     for font in UIFont.fontNames(forFamilyName: family) {
+                         if font.lowercased().contains("playfair") {
+                             print("FOUND:", font)
+                         }
+                     }
+                 }
+             }
         .overlay{
             Text(category.name)
-                .font(.custom("PlayfairDisplay-Black", size: 20))
+                .font(.custom("PlayfairDisplay-Regular", size: 20))
+                 
         }
-    }
+            }
 }

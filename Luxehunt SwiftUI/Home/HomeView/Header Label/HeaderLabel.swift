@@ -12,7 +12,7 @@ struct HeaderLabel: View {
     
     var body: some View {
         HStack{
-          Text(headerLabel)
+            Text(headerLabel).font(.custom("Playfair Display", size: 22))
             Spacer()
         }
             .padding(.vertical, 10)

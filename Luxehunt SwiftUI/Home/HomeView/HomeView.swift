@@ -14,8 +14,8 @@ struct HomeView: View {
     
     
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), spacing: 5),
+        GridItem(.flexible(), spacing: 5)
     ]
     var body: some View {
         ZStack {
@@ -23,7 +23,7 @@ struct HomeView: View {
                 .ignoresSafeArea()
             VStack(spacing: 0) {
                 HeaderView()
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
                         TopBigImageView()
                         HeaderLabel(headerLabel: "Top Trending")
@@ -37,7 +37,7 @@ struct HomeView: View {
                             .padding(.leading, 0)
                         }
                         HeaderLabel(headerLabel: "Shop by feed")
-                        HStack(spacing: 5) {
+                        HStack() {
                           NavigationLink(destination: {
                               AllDealsView()//.navigationBarBackButtonHidden()
                           }, label: {
@@ -63,8 +63,7 @@ struct HomeView: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
-                                .clipped()
-                        }
+                        }.cornerRadius(10)
                       
                         HeaderLabel(headerLabel: "Shop by category")
                         if (homeViewModel.categoryModel.isEmpty ){

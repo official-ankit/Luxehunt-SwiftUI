@@ -6,13 +6,31 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0BB9376C2F0E24B3009FECD1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0BB9376B2F0E24B3009FECD1 /* Alamofire */; };
+		0BB9376F2F0E25DF009FECD1 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 0BB9376E2F0E25DF009FECD1 /* SwiftyJSON */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0BA4F0ED2F0BC5CA00584585 /* Luxehunt SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Luxehunt SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0B4F19062F1108A300B4C51B /* Exceptions for "Luxehunt SwiftUI" folder in "Luxehunt SwiftUI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Luxehunt-SwiftUI-Info.plist",
+			);
+			target = 0BA4F0EC2F0BC5CA00584585 /* Luxehunt SwiftUI */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0BA4F0EF2F0BC5CA00584585 /* Luxehunt SwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0B4F19062F1108A300B4C51B /* Exceptions for "Luxehunt SwiftUI" folder in "Luxehunt SwiftUI" target */,
+			);
 			path = "Luxehunt SwiftUI";
 			sourceTree = "<group>";
 		};
@@ -23,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BB9376F2F0E25DF009FECD1 /* SwiftyJSON in Frameworks */,
+				0BB9376C2F0E24B3009FECD1 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +85,8 @@
 			);
 			name = "Luxehunt SwiftUI";
 			packageProductDependencies = (
+				0BB9376B2F0E24B3009FECD1 /* Alamofire */,
+				0BB9376E2F0E25DF009FECD1 /* SwiftyJSON */,
 			);
 			productName = "Luxehunt SwiftUI";
 			productReference = 0BA4F0ED2F0BC5CA00584585 /* Luxehunt SwiftUI.app */;
@@ -94,6 +116,10 @@
 			);
 			mainGroup = 0BA4F0E42F0BC5CA00584585;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0BB9376A2F0E24B3009FECD1 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				0BB9376D2F0E25DF009FECD1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0BA4F0EE2F0BC5CA00584585 /* Products */;
 			projectDirPath = "";
@@ -253,6 +279,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Luxehunt-SwiftUI-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +311,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Luxehunt-SwiftUI-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -328,6 +356,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0BB9376A2F0E24B3009FECD1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "http://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.0;
+			};
+		};
+		0BB9376D2F0E25DF009FECD1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0BB9376B2F0E24B3009FECD1 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BB9376A2F0E24B3009FECD1 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		0BB9376E2F0E25DF009FECD1 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BB9376D2F0E25DF009FECD1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0BA4F0E52F0BC5CA00584585 /* Project object */;
 }

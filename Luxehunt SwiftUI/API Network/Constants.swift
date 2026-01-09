@@ -28,6 +28,7 @@ public struct Constants {
     public static let api_category = "cat/all" // post
     public static let api_top_trending = "product/toptrending" // post
     public static let api_all_deals = "product/list" // post
+    public static let api_all_sales = "promos/all" // post
 
 
 }

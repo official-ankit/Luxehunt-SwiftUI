@@ -45,9 +45,8 @@ struct HeaderView: View {
                 .frame(height: 24)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 5)   
+        .padding(.vertical, 10)
         .background(Color.white)
-        .frame(height: 100)
     }
 }
 

@@ -7,19 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B2F6E892F0CE49E00EBCE5F /* Info.plist .plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B2F6E882F0CE49E00EBCE5F /* Info.plist .plist */; };
 		0BB9376C2F0E24B3009FECD1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0BB9376B2F0E24B3009FECD1 /* Alamofire */; };
 		0BB9376F2F0E25DF009FECD1 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 0BB9376E2F0E25DF009FECD1 /* SwiftyJSON */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0B2F6E882F0CE49E00EBCE5F /* Info.plist .plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist .plist"; sourceTree = "<group>"; };
 		0BA4F0ED2F0BC5CA00584585 /* Luxehunt SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Luxehunt SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0B4F19062F1108A300B4C51B /* Exceptions for "Luxehunt SwiftUI" folder in "Luxehunt SwiftUI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Luxehunt-SwiftUI-Info.plist",
+			);
+			target = 0BA4F0EC2F0BC5CA00584585 /* Luxehunt SwiftUI */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0BA4F0EF2F0BC5CA00584585 /* Luxehunt SwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0B4F19062F1108A300B4C51B /* Exceptions for "Luxehunt SwiftUI" folder in "Luxehunt SwiftUI" target */,
+			);
 			path = "Luxehunt SwiftUI";
 			sourceTree = "<group>";
 		};
@@ -41,7 +52,6 @@
 		0BA4F0E42F0BC5CA00584585 = {
 			isa = PBXGroup;
 			children = (
-				0B2F6E882F0CE49E00EBCE5F /* Info.plist .plist */,
 				0BA4F0EF2F0BC5CA00584585 /* Luxehunt SwiftUI */,
 				0BA4F0EE2F0BC5CA00584585 /* Products */,
 			);
@@ -125,7 +135,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B2F6E892F0CE49E00EBCE5F /* Info.plist .plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +279,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Luxehunt-SwiftUI-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -301,6 +311,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Luxehunt-SwiftUI-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

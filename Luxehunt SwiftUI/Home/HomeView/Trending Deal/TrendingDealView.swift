@@ -15,24 +15,24 @@ struct TrendingDealView: View {
     @State var lblPrice = "602 "
     @State var lblDiscount = "20 "
     @State var contImageHeight = 184
+    @State var contFrameHeight = 272
+    @State var constFrameWidht = UIScreen.main.bounds.width / 2
+    
     var body: some View {
         ZStack(alignment: .leading){
+            Color.red
             VStack(alignment: .leading, spacing: 0){
                 AsyncImage(
                     url: URL(string: imgTrendingDeal),
                     content: { image in
                         image
                             .resizable()
-                            .scaledToFill()
+                            .frame(height: CGFloat(contImageHeight))
                     },
                     placeholder: {
-                        ProgressView()
+                        
                     }
-                )
-                .frame(height: 214)
-                .clipped()
-
-                
+                ).padding(.top, 0)
                 VStack(alignment:.leading){
                     Text(lblBrandName)
                         .font(.custom("PlayfairDisplay-Black", size: 20))
@@ -51,12 +51,14 @@ struct TrendingDealView: View {
                             .font(.custom("PlayfairDisplay-Black", size: 12))
                         
                     }
-                    
+                 Spacer()
                 }.padding(.horizontal,10)
             }.padding(.top,0)
-                .padding(.bottom, 10)
+//                .padding(.bottom, 10)
                 
-        }.cornerRadius(16)
+        }.frame(width: CGFloat(constFrameWidht), height: CGFloat(contFrameHeight))
+        
+        .cornerRadius(16)
             .overlay {
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(Color.gray, lineWidth: 1)

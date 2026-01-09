@@ -8,29 +8,50 @@
 import SwiftUI
 
 struct AllDealsView: View {
+
     @StateObject var dealViewModel = DealsViewModel()
-    var column = [
+
+    private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
-    
+
     var body: some View {
         ZStack{
-            LazyVGrid(columns: column, spacing: 5) {
-                ForEach(dealViewModel.products,id: \.product.id){ item in
-                    TrendingDealView(lblBrandName: item.product.brand,contImageHeight: 280)
-                    
+            VStack{
+                Color.white.frame(height:1)
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(dealViewModel.products, id: \.id) { item in
+                            TrendingDealView(
+                                imgTrendingDeal: item.image,
+                                lblBrandName: item.brand,
+                                contImageHeight: 280,
+                                contFrameHeight: 352
+                            )
+                            .onAppear {
+                                if item.id == dealViewModel.products.last?.id {
+                                    dealViewModel.fetchDealList()
+                                }
+                            }
+                        }
+                        if dealViewModel.isLoading {
+                            ProgressView()
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                        }
+                    }
+                    .padding(.horizontal, 4)
+                }
+                .onAppear {
+                    dealViewModel.fetchDealList()
                 }
             }
-        }
-            .onAppear{
-                dealViewModel.fetchAllDeals(page: 1)
-            }
+        }//.ignoresSafeArea()
     }
-    
 }
 
-#Preview {
-    AllDealsView()
-}
+
+//#Preview {
+//    AllDealsView()
+//}

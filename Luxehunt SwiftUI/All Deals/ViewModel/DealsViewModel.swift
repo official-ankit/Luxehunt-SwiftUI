@@ -12,23 +12,33 @@ import Alamofire
 
 
 class DealsViewModel:ObservableObject{
-    @Published var products: [AllDealResponse] = []
-       @Published var isLoading: Bool = false
-       @Published var errorMessage: String?
+    @Published var products: [Product] = []
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
+    private var currentPage: Int = 1
+    private var canLoadMore: Bool = true
     
     var appServer = AppServerClient.sharedInstance
   
-    func fetchAllDeals(page: Int = 1) {
+    func fetchDealList() {
+            guard !isLoading, canLoadMore else { return }
+
             isLoading = true
+            let url = "product/list?page=\(currentPage)"
 
-            let url = "product/list?page=\(page)"
-
-        appServer.getApi(
+            appServer.getApi(
                 url: url,
                 success: { (response: AllDealsModel) in
                     DispatchQueue.main.async {
-                        self.products = response.data
-                        print(self.products)
+
+                        let newProducts = response.data.products
+                        if newProducts.isEmpty {
+                            self.canLoadMore = false
+                        } else {
+                            self.products.append(contentsOf: newProducts)
+                            self.currentPage += 1
+                        }
+
                         self.isLoading = false
                     }
                 },
@@ -40,6 +50,12 @@ class DealsViewModel:ObservableObject{
                 }
             )
         }
-    
+
+        // MARK: - Reset
+        private func resetPagination() {
+            currentPage = 1
+            canLoadMore = true
+            products.removeAll()
+        }
     }
 

@@ -31,7 +31,7 @@ struct HomeView: View {
                             HStack(spacing: 12) {
                                 ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
                                     
-                                    TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "")
+                                    TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "", constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
                                 }
                             }
                             .padding(.leading, 0)
@@ -39,7 +39,7 @@ struct HomeView: View {
                         HeaderLabel(headerLabel: "Shop by feed")
                         HStack(spacing: 5) {
                           NavigationLink(destination: {
-                              AllDealsView().navigationBarBackButtonHidden()
+                              AllDealsView()//.navigationBarBackButtonHidden()
                           }, label: {
                               Image("AllDeals")
                                   .resizable()

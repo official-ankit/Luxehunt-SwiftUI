@@ -8,8 +8,23 @@
 import SwiftUI
 
 struct SalesView: View {
+    @StateObject var viewModel = SalesViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+            Color.appColorBackground
+            VStack{
+                HeaderView()
+                List{
+                    ForEach(viewModel.salesData, id: \.id) { item in
+                        SalesCell(lblsalesHeading: item.head ?? "", lblsalesSubHeading: item.title)
+                            .listRowSeparator(.hidden)
+                    }
+                }.listStyle(.plain)
+            }.onAppear{
+                    viewModel.fetchSalesList()
+                }
+            }
     }
 }
 

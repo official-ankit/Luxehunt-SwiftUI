@@ -34,7 +34,8 @@ struct CategoryView: View {
              }
         .overlay{
             Text(category.name)
-                .font(.custom("PlayfairDisplay-Regular", size: 20))
+                .font(.custom("PlayfairDisplay-Regular", size: 26))
+                .foregroundColor(.white)
                  
         }
             }

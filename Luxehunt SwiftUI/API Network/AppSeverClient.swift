@@ -50,7 +50,7 @@ class AppServerClient {
                     failure(json)
                     let responseDict = (json.rawValue) as? Dictionary<String,AnyObject>
                     failure(JSON(rawValue: ((responseDict?["error"]?["message"] ?? responseDict?["error"]) ?? "" ) ) ?? "")
-                    print(responseDict)
+//                    print(responseDict)
                 }
         }
     }
@@ -74,7 +74,7 @@ class AppServerClient {
             .responseData { response in
                 // Print raw body for debugging
                 if let data = response.data, let body = String(data: data, encoding: .utf8) {
-                    print("GET \(urlWithBase) raw response:\n\(body)")
+//                    print("GET \(urlWithBase) raw response:\n\(body)")
                 }
                 switch response.result {
                 case .success(let data):

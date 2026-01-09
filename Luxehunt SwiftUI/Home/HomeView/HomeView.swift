@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
+    @State private var currentIndex = 0
     
     @State var categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
     
@@ -25,7 +26,16 @@ struct HomeView: View {
                 HeaderView()
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
-                        TopBigImageView()
+                        
+                        TabView(selection: $currentIndex) {
+                            ForEach(Array(homeViewModel.allBannerData.enumerated()), id: \.element.id) { index, item in
+                                TopBigImageView(imgBanner: item.image ?? "")
+                                    .tag(index)
+                                    .padding(.horizontal, 0)   
+                            }
+                        }
+                        .frame(height: 490)
+                        .tabViewStyle(.page(indexDisplayMode: .automatic))
                         HeaderLabel(headerLabel: "Top Trending")
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
@@ -90,8 +100,15 @@ struct HomeView: View {
                 .padding(.horizontal,20)
         }
         .onAppear{
-            homeViewModel.fetchTopTrendingProducts()
-            homeViewModel.fetchCategories()
+                homeViewModel.fetchAllBanner()
+                homeViewModel.fetchTopTrendingProducts()
+                homeViewModel.fetchCategories()
+            Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
+                   withAnimation {
+                       currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
+                   }
+               }
+         
             
            
         }

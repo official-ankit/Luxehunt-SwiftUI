@@ -10,21 +10,24 @@ import SwiftUI
 
     struct TopBigImageView: View {
         
-        let images = ["BigBanner", "BigBanner", "BigBanner", "BigBanner"]
+        
+        @State var imgBanner = "BigBanner"
         
         var body: some View {
-            TabView {
-                ForEach(images, id: \.self) { image in
-                    Image(image)
+            HStack{
+                AsyncImage(url: URL(string: imgBanner)){ img in
+                    img.resizable()
+                        .frame(height: 490)
+                    
+                } placeholder: {
+                    Image(imgBanner)
                         .resizable()
-                        .scaledToFill()
                         .frame(maxWidth: .infinity)
                         .frame(height: 490)
-                        .clipped()
                 }
+                
             }
-            .frame(height: 490)
-            .tabViewStyle(.page(indexDisplayMode: .automatic))
+            
         }
     }
 

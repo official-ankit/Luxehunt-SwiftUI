@@ -31,9 +31,9 @@ struct HomeView: View {
                             ForEach(Array(homeViewModel.allBannerData.enumerated()), id: \.element.id) { index, item in
                                 TopBigImageView(imgBanner: item.image ?? "")
                                     .tag(index)
-                                    .padding(.horizontal, 0)   
+                                    .padding(.horizontal, 0)
                             }
-                        }
+                        }.cornerRadius(8)
                         .frame(height: 490)
                         .tabViewStyle(.page(indexDisplayMode: .automatic))
                         HeaderLabel(headerLabel: "Top Trending")

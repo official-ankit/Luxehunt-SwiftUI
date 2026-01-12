@@ -7,31 +7,37 @@
 
 import SwiftUI
 
+struct TopBigImageView: View {
 
-    struct TopBigImageView: View {
-        
-        
-         var imgBanner = "BigBanner"
-        
-        var body: some View {
-            HStack{
-                AsyncImage(url: URL(string: imgBanner)){ img in
-                    img.resizable()
-                        .frame(height: 490)
-                    
-                } placeholder: {
-                    Image(imgBanner)
-                        .resizable()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 490)
-                }
-                
+    let imgBanner: String
+
+    var body: some View {
+        AsyncImage(url: URL(string: imgBanner)) { phase in
+            switch phase {
+
+            case .empty:
+                ShimmerView()
+                    .frame(height: 490)
+                    .cornerRadius(15)
+
+            case .success(let image):
+                image
+                    .resizable()
+                    .frame(height: 490)
+
+            case .failure:
+                ShimmerView()
+                    .frame(height: 490)
+                    .cornerRadius(15)
+
+            @unknown default:
+                EmptyView()
             }
-            
         }
+        .frame(height: 490)
+        .frame(maxWidth: .infinity)
+        .clipped()
     }
+}
 
-//#Preview {
-//    TopBigImageView()
-//}
 

@@ -39,10 +39,20 @@ struct HomeView: View {
                         HeaderLabel(headerLabel: "Top Trending")
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
+                                if homeViewModel.allBannerData.isEmpty{
+                                    ForEach(0..<4, id: \.self){ _ in
+                                        TrendingDealShimmerView(width: UIScreen.main.bounds.width / 2.8,
+                                                                imageHeight: 184,
+                                                                totalHeight: 252
+                                        )
+                                        
+                                    }
+                                }else{
                                 ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
                                     
                                     TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "", constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
                                 }
+                            }
                             }
                             .padding(.leading, 0)
                         }

@@ -11,7 +11,7 @@ import SwiftUI
     struct TopBigImageView: View {
         
         
-        @State var imgBanner = "BigBanner"
+         var imgBanner = "BigBanner"
         
         var body: some View {
             HStack{

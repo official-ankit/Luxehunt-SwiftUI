@@ -17,6 +17,7 @@ class HomeViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
     @Published var topTrendingProducts: [DataItem] = []
+    @Published var allBannerData: [Banner] = []
     @Published var isLoadingTopTrending = false
 
     func fetchCategories() {
@@ -24,7 +25,6 @@ class HomeViewModel: ObservableObject {
 
         apiClient.getApi(url: Constants.api_category) { (envelope: CategoryListEnvelope) in
             DispatchQueue.main.async {
-                // Optionally, you could check envelope.error here.
                 self.categoryModel = envelope.data.category
                 self.isLoading = false
                 self.errorMessage = nil
@@ -39,11 +39,9 @@ class HomeViewModel: ObservableObject {
     
     func fetchTopTrendingProducts() {
             isLoadingTopTrending = true
-
         apiClient.getApi(url: Constants.api_top_trending, success: { (response: TopTrendingModel) in
                 DispatchQueue.main.async {
                     self.topTrendingProducts = response.data
-                    print(self.topTrendingProducts)
                     self.isLoadingTopTrending = false
                 }
             }, failure: { error in
@@ -53,6 +51,17 @@ class HomeViewModel: ObservableObject {
                 }
             })
         }
+    
+    func fetchAllBanner(){
+        apiClient.getApi(url: Constants.api_all_banner, success: { (response:BannerModel) in
+            DispatchQueue.main.async{
+                self.allBannerData = response.data.banner
+                print("Banner=\(response)")
+            }
+        }, failure: { error in
+            print(error)
+        })
+    }
 }
 
 

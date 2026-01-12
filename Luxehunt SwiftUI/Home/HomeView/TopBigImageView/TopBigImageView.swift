@@ -7,28 +7,37 @@
 
 import SwiftUI
 
+struct TopBigImageView: View {
 
-    struct TopBigImageView: View {
-        
-        let images = ["BigBanner", "BigBanner", "BigBanner", "BigBanner"]
-        
-        var body: some View {
-            TabView {
-                ForEach(images, id: \.self) { image in
-                    Image(image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 490)
-                        .clipped()
-                }
+    let imgBanner: String
+
+    var body: some View {
+        AsyncImage(url: URL(string: imgBanner)) { phase in
+            switch phase {
+
+            case .empty:
+                ShimmerView()
+                    .frame(height: 490)
+                    .cornerRadius(15)
+
+            case .success(let image):
+                image
+                    .resizable()
+                    .frame(height: 490)
+
+            case .failure:
+                ShimmerView()
+                    .frame(height: 490)
+                    .cornerRadius(15)
+
+            @unknown default:
+                EmptyView()
             }
-            .frame(height: 490)
-            .tabViewStyle(.page(indexDisplayMode: .automatic))
         }
+        .frame(height: 490)
+        .frame(maxWidth: .infinity)
+        .clipped()
     }
-
-#Preview {
-    TopBigImageView()
 }
+
 

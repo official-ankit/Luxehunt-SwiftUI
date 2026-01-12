@@ -15,22 +15,9 @@
 		0BA4F0ED2F0BC5CA00584585 /* Luxehunt SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Luxehunt SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0B4F19062F1108A300B4C51B /* Exceptions for "Luxehunt SwiftUI" folder in "Luxehunt SwiftUI" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Luxehunt-SwiftUI-Info.plist",
-			);
-			target = 0BA4F0EC2F0BC5CA00584585 /* Luxehunt SwiftUI */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0BA4F0EF2F0BC5CA00584585 /* Luxehunt SwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0B4F19062F1108A300B4C51B /* Exceptions for "Luxehunt SwiftUI" folder in "Luxehunt SwiftUI" target */,
-			);
 			path = "Luxehunt SwiftUI";
 			sourceTree = "<group>";
 		};

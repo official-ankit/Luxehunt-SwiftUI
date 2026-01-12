@@ -27,33 +27,39 @@ class AppServerClient {
         }
         baseURL = environment.BaseURL
     }
-    func api(url: String, param: [String:Any]?, method: HTTPMethod, success: @escaping (JSON) -> Void, failure: @escaping ((JSON) -> Void)) -> Void {
+    func api<T: Decodable>(
+        url: String,
+        param: [String: Any]?,
+        method: HTTPMethod,
+        success: @escaping (T) -> Void,
+        failure: @escaping (String) -> Void
+    ) {
 
         let headers: HTTPHeaders = [
             "Authorization": UserDefaultsManager.shared.accessToken,
             "Content-Type": "application/json"
         ]
+
         let urlWithBase = "\(baseURL)\(url)"
-        AF.request(urlWithBase, method: method, parameters: param, encoding: JSONEncoding.default, headers: headers)
-            .validate()
-            .responseJSON { response in
-                guard let data = response.data else {
-                    failure("Failed to get data")
-//                    showAlert(with: "Failed", message: "Failed to get data")
-                    return
-                }
-                let json = JSON(data)
-                switch response.result {
-                case .success:
-                    success(json)
-                case .failure:
-                    failure(json)
-                    let responseDict = (json.rawValue) as? Dictionary<String,AnyObject>
-                    failure(JSON(rawValue: ((responseDict?["error"]?["message"] ?? responseDict?["error"]) ?? "" ) ) ?? "")
-                    print(responseDict)
-                }
+
+        AF.request(
+            urlWithBase,
+            method: method,
+            parameters: param,
+            encoding: JSONEncoding.default,
+            headers: headers
+        )
+        .validate()
+        .responseDecodable(of: T.self) { response in
+            switch response.result {
+            case .success(let result):
+                success(result)
+            case .failure(let error):
+                failure(error.localizedDescription)
+            }
         }
     }
+
 
     
     
@@ -74,7 +80,7 @@ class AppServerClient {
             .responseData { response in
                 // Print raw body for debugging
                 if let data = response.data, let body = String(data: data, encoding: .utf8) {
-                    print("GET \(urlWithBase) raw response:\n\(body)")
+//                    print("GET \(urlWithBase) raw response:\n\(body)")
                 }
                 switch response.result {
                 case .success(let data):

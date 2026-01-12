@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
+    @State private var currentIndex = 0
     
     @State var categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
     
@@ -22,24 +23,43 @@ struct HomeView: View {
             Color.appColorBackground
                 .ignoresSafeArea()
             VStack(spacing: 0) {
-                HeaderView()
+                HeaderView().padding(.top,20)
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
-                        TopBigImageView()
+                        
+                        TabView(selection: $currentIndex) {
+                            ForEach(Array(homeViewModel.allBannerData.enumerated()), id: \.element.id) { index, item in
+                                TopBigImageView(imgBanner: item.image ?? "")
+                                    .tag(index)
+                                    .padding(.horizontal, 0)
+                            }
+                        }.cornerRadius(8)
+                        .frame(height: 490)
+                        .tabViewStyle(.page(indexDisplayMode: .automatic))
                         HeaderLabel(headerLabel: "Top Trending")
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 12) {
+                                if homeViewModel.allBannerData.isEmpty{
+                                    ForEach(0..<4, id: \.self){ _ in
+                                        TrendingDealShimmerView(width: UIScreen.main.bounds.width / 2.8,
+                                                                imageHeight: 184,
+                                                                totalHeight: 252
+                                        )
+                                        
+                                    }
+                                }else{
                                 ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
                                     
                                     TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "", constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
                                 }
                             }
+                            }
                             .padding(.leading, 0)
                         }
                         HeaderLabel(headerLabel: "Shop by feed")
-                        HStack() {
+                        HStack(spacing: 0) {
                           NavigationLink(destination: {
-                              AllDealsView()//.navigationBarBackButtonHidden()
+                              AllDealsView().navigationBarBackButtonHidden()
                           }, label: {
                               Image("AllDeals")
                                   .resizable()
@@ -49,21 +69,41 @@ struct HomeView: View {
                                   .overlay(){
                                       ZStack{
                                           Color.appColorAllDealsBg
+                                              .blur(radius: 12)
                                           HStack{
                                               Image(systemName: "person.2")
+                                                  .tint(.white)
                                               Text("Created Deals")
                                                   .font(.custom("PlayfairDisplay-Black", size: 12))
+                                                  .foregroundColor(.white)
                                           }
                                       }.frame(height: 44)
                                           .padding(.horizontal, 10)
                                   }
                           })
                             
-                            Image("AllDeals")
+                            Image("LuxePass")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
+                                .blur(radius:1.0)
+                                .overlay(){
+                                    ZStack{
+                                        Color.luxepassBG
+                                        HStack{
+                                            Image(systemName: "lock")
+                                                .tint(.white)
+                                           
+                                            Text("Luxe Pass Only")
+                                                .font(.custom("PlayfairDisplay-Black", size: 12))
+                                                .foregroundColor(.white)
+                                        }
+                                    }.frame(height: 44)
+                                        .padding(.horizontal, 10)
+                                 
+                                }
                         }.cornerRadius(10)
+                        
                       
                         HeaderLabel(headerLabel: "Shop by category")
                         if (homeViewModel.categoryModel.isEmpty ){
@@ -90,8 +130,15 @@ struct HomeView: View {
                 .padding(.horizontal,20)
         }
         .onAppear{
-            homeViewModel.fetchTopTrendingProducts()
-            homeViewModel.fetchCategories()
+                homeViewModel.fetchAllBanner()
+                homeViewModel.fetchTopTrendingProducts()
+                homeViewModel.fetchCategories()
+            Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { _ in
+                   withAnimation {
+                       currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
+                   }
+               }
+         
             
            
         }

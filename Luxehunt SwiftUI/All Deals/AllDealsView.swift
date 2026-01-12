@@ -11,6 +11,9 @@ struct AllDealsView: View {
     
     @StateObject var dealViewModel = DealsViewModel()
     @State var search = ""
+    @State var openFilterSheet:Bool = false
+   
+
     @Environment(\.dismiss) var dismiss
     private let columns = [
         GridItem(.flexible()),
@@ -40,9 +43,8 @@ struct AllDealsView: View {
                         })
                 }
                 HStack(spacing: 0){
-                    Button(action: {
-                        print("All Deals Button Tapped")
-                    }, label: {
+                   
+                   
                         ZStack{
                             Color.black
                             HStack{
@@ -53,8 +55,10 @@ struct AllDealsView: View {
                                     .font(.custom("Inter", size: 14))
                                     .foregroundColor(.white)
                             }
+                        }.onTapGesture {
+                            print("All deals button pressed")
                         }
-                    })
+                
                   
                     ZStack{
                         LinearGradient(
@@ -75,6 +79,8 @@ struct AllDealsView: View {
                                 .font(.custom("Inter", size: 14))
                                 .foregroundColor(.white)
                         }
+                    }.onTapGesture {
+                        
                     }
                 }.frame(height: 50)
                     .cornerRadius(5)
@@ -105,8 +111,28 @@ struct AllDealsView: View {
                 .onAppear {
                     dealViewModel.fetchDealList()
                 }
+                ZStack{
+                    Color.white
+                    HStack(alignment: .center){
+                       Button(action: {
+                           openFilterSheet = true
+                       },
+                              label: {
+                           Image(systemName: "line.3.horizontal.decrease").foregroundColor(.black)
+                           Text("Filter and Sort")
+                       })
+                        
+                    }
+                    
+                }.frame(height: 50)
+                
             }.padding(.horizontal, 8)
-        }//.ignoresSafeArea()
+            if openFilterSheet{
+                Color.black.opacity(0.5).ignoresSafeArea()
+            }
+        }.sheet(isPresented: $openFilterSheet, content: {
+            FilterAndSortView()
+        })
     }
 }
 

@@ -17,7 +17,7 @@ struct TrendingDealView: View {
     
     var contImageHeight: CGFloat = 184
     var contFrameHeight: CGFloat = 252
-    var constFrameWidht: CGFloat = UIScreen.main.bounds.width / 2
+    var constFrameWidht: CGFloat = UIScreen.main.bounds.width / 2 - 16
 
     var body: some View {
         ZStack{

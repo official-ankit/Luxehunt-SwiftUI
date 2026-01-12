@@ -59,7 +59,7 @@ struct HomeView: View {
                         HeaderLabel(headerLabel: "Shop by feed")
                         HStack(spacing: 0) {
                           NavigationLink(destination: {
-                              AllDealsView()//.navigationBarBackButtonHidden()
+                              AllDealsView().navigationBarBackButtonHidden()
                           }, label: {
                               Image("AllDeals")
                                   .resizable()

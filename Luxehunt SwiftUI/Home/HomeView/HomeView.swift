@@ -23,7 +23,7 @@ struct HomeView: View {
             Color.appColorBackground
                 .ignoresSafeArea()
             VStack(spacing: 0) {
-                HeaderView()
+                HeaderView().padding(.top,20)
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
                         
@@ -133,7 +133,7 @@ struct HomeView: View {
                 homeViewModel.fetchAllBanner()
                 homeViewModel.fetchTopTrendingProducts()
                 homeViewModel.fetchCategories()
-            Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
+            Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { _ in
                    withAnimation {
                        currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
                    }

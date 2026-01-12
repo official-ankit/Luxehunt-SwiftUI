@@ -31,7 +31,7 @@ import SwiftUI
         }
     }
 
-#Preview {
-    TopBigImageView()
-}
+//#Preview {
+//    TopBigImageView()
+//}
 

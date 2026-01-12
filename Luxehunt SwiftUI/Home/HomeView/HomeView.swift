@@ -59,10 +59,13 @@ struct HomeView: View {
                                   .overlay(){
                                       ZStack{
                                           Color.appColorAllDealsBg
+                                              .blur(radius: 12)
                                           HStack{
                                               Image(systemName: "person.2")
+                                                  .tint(.white)
                                               Text("Created Deals")
                                                   .font(.custom("PlayfairDisplay-Black", size: 12))
+                                                  .foregroundColor(.white)
                                           }
                                       }.frame(height: 44)
                                           .padding(.horizontal, 10)

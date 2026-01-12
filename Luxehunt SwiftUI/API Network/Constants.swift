@@ -30,6 +30,7 @@ public struct Constants {
     public static let api_all_deals = "product/list" // post
     public static let api_all_sales = "promos/all" // post
     public static let api_all_banner = "banner/all" // post
+    public static let api_designer = "product/brands"
 
 
 }

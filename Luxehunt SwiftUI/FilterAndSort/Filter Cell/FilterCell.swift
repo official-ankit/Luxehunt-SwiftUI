@@ -12,6 +12,9 @@ struct FilterCell: View {
     var body: some View {
         VStack(alignment: .leading){
             Text(filterName).foregroundColor(.black)
+                .font(.custom("Inter", size: 14))
+                .lineLimit(1)                    
+//                    .truncationMode(.tail)
                 .padding(.horizontal,10)
                 .padding(.vertical,10)
         }.overlay(content: {

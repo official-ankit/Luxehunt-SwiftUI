@@ -47,7 +47,7 @@ struct HomeView: View {
                             .padding(.leading, 0)
                         }
                         HeaderLabel(headerLabel: "Shop by feed")
-                        HStack() {
+                        HStack(spacing: 0) {
                           NavigationLink(destination: {
                               AllDealsView()//.navigationBarBackButtonHidden()
                           }, label: {
@@ -69,11 +69,28 @@ struct HomeView: View {
                                   }
                           })
                             
-                            Image("AllDeals")
+                            Image("LuxePass")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(maxWidth: .infinity)
+                                .blur(radius:1.0)
+                                .overlay(){
+                                    ZStack{
+                                        Color.luxepassBG
+                                        HStack{
+                                            Image(systemName: "lock")
+                                                .tint(.white)
+                                           
+                                            Text("Luxe Pass Only")
+                                                .font(.custom("PlayfairDisplay-Black", size: 12))
+                                                .foregroundColor(.white)
+                                        }
+                                    }.frame(height: 44)
+                                        .padding(.horizontal, 10)
+                                 
+                                }
                         }.cornerRadius(10)
+                        
                       
                         HeaderLabel(headerLabel: "Shop by category")
                         if (homeViewModel.categoryModel.isEmpty ){

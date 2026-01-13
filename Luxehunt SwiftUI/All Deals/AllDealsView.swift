@@ -12,6 +12,7 @@ struct AllDealsView: View {
     @StateObject var dealViewModel = DealsViewModel()
     @State var search = ""
     @State var openFilterSheet:Bool = false
+    var selectCat = ""
    
 
     @Environment(\.dismiss) var dismiss
@@ -94,11 +95,11 @@ struct AllDealsView: View {
                                 contImageHeight: 280,
                                 contFrameHeight: 352
                             )
-                            .onAppear {
-                                if item.id == dealViewModel.products.last?.id {
-                                    dealViewModel.fetchDealList()
-                                }
-                            }
+//                            .onAppear {
+//                                if item.id == dealViewModel.products.last?.id {
+//                                    dealViewModel.applyFilters(category: selectCat, search: "")
+//                                }
+//                            }
                         }
                         if dealViewModel.isLoading {
                             ProgressView()
@@ -108,9 +109,7 @@ struct AllDealsView: View {
                     }
                     .padding(.horizontal, 4)
                 }
-                .onAppear {
-                    dealViewModel.fetchDealList()
-                }
+               
                 ZStack{
                     Color.white
                     HStack(alignment: .center){
@@ -130,7 +129,12 @@ struct AllDealsView: View {
             if openFilterSheet{
                 Color.black.opacity(0.5).ignoresSafeArea()
             }
-        }.sheet(isPresented: $openFilterSheet, content: {
+        } .onAppear {
+//            dealViewModel.resetPagination()
+                                print("Selected Category:", selectCat)
+                                dealViewModel.fetchDealListWithFilters(category: selectCat, search: "")
+                            }
+        .sheet(isPresented: $openFilterSheet, content: {
             FilterAndSortView(isDismiss: $openFilterSheet)
         })
     }

@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
     @State private var currentIndex = 0
-    
+    @State var selectCat = ""
+    @State var isNavigate:Bool = false
     @State var categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
     
     
@@ -118,7 +119,11 @@ struct HomeView: View {
                                     CategoryView(
                                         category: category,
                                         imgCategory: imageName
-                                    )
+                                    
+                                    ).onTapGesture {
+                                        selectCat = category.name
+                                        isNavigate.toggle()
+                                    }
                                 }
                             }
 
@@ -128,6 +133,11 @@ struct HomeView: View {
                 }
             }.padding(.top,20).edgesIgnoringSafeArea(.top)
                 .padding(.horizontal,20)
+            
+            
+            NavigationLink(isActive: $isNavigate, destination: {AllDealsView(selectCat: selectCat).navigationBarBackButtonHidden()}, label: {
+                EmptyView()
+            })
         }
         .onAppear{
                 homeViewModel.fetchAllBanner()

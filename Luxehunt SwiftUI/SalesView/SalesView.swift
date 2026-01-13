@@ -28,6 +28,6 @@ struct SalesView: View {
     }
 }
 
-#Preview {
-    SalesView()
-}
+//#Preview {
+//    SalesView()
+//}

@@ -131,7 +131,7 @@ struct AllDealsView: View {
                 Color.black.opacity(0.5).ignoresSafeArea()
             }
         }.sheet(isPresented: $openFilterSheet, content: {
-            FilterAndSortView()
+            FilterAndSortView(isDismiss: $openFilterSheet)
         })
     }
 }

@@ -99,6 +99,9 @@ struct AllDealsView: View {
                             TrendingDealView(
                                 imgTrendingDeal: item.image,
                                 lblBrandName: item.brand,
+//                                lblBrandText: item.title,
+//                                lblPrice: item.offer_price,
+//                                lblDiscount: item.original_price,
                                 contImageHeight: 280,
                                 contFrameHeight: 352
                             )

@@ -8,16 +8,31 @@
 import SwiftUI
 
 struct WebView: View {
-    @State var data:ProductDetail
-    var body: some View {
-        ZStack{
-            Color.red
-            Text(data.brand ?? "")
-        }.onAppear{
-           
+    let data: ProductDetail
+
+        var body: some View {
+            VStack(spacing: 0) {
+                
+                // 🔹 Custom Header (Optional)
+                HStack {
+                    Text(data.brand ?? "")
+                        .font(.headline)
+                    Spacer()
+                }
+                .padding()
+                .background(Color.white)
+
+                Divider()
+
+                // 🔹 WebView
+                InAppWebView(urlString: data.original_link ?? "")
+            }.onAppear{
+                print(data)
+                print(data.original_link)
+            }
+            .ignoresSafeArea()
         }
     }
-}
 
 //#Preview {
 //    WebView()

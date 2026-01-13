@@ -10,7 +10,7 @@ import SwiftUI
 struct AllDealsView: View {
     
     @StateObject var dealViewModel = DealsViewModel()
-    @State var search = ""
+    @State var searchProduct = ""
     @State var openFilterSheet:Bool = false
     var selectCat = ""
    
@@ -35,7 +35,7 @@ struct AllDealsView: View {
                             .tint(.black)
                     })
                     
-                    TextField("Search", text: $search)
+                    TextField("Search", text: $searchProduct)
                         .frame(height: 30)
                         .padding(.leading, 10)
                         .overlay(content: {

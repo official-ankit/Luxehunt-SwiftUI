@@ -45,8 +45,7 @@ struct HeaderView: View {
             Button(action: {
                 btnMenu.toggle()
             }, label: {
-                Image("iconList")
-                    .resizable()
+                Image("iconList").foregroundColor(.black)
                     .scaledToFit()
                     .frame(height: 24)
             })

@@ -13,6 +13,16 @@ struct DesignerView: View {
     var onBack: () -> Void
     @State var searchText:String = ""
     
+    
+    var filteredDesigners: [String] {
+            let list = designerData.filterData?.data ?? []
+            return searchText.isEmpty
+                ? list
+                : list.filter {
+                    $0.localizedCaseInsensitiveContains(searchText)
+                }
+        }
+    
     var body: some View {
         ZStack{
             Color.appColorBackground
@@ -28,7 +38,7 @@ struct DesignerView: View {
                             .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                     )
                 List {
-                    ForEach(designerData.filterData?.data ?? [], id: \.self) { filter in
+                    ForEach(filteredDesigners, id: \.self) { filter in
                         Text(filter)
                             .font(.custom("Inter", size: 14))
                             .padding(.leading, 10)

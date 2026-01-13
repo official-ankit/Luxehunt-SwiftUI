@@ -41,7 +41,7 @@ struct TrendingDealView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(lblBrandName)
                         .font(.custom("PlayfairDisplay-Regular", size: 16))
-                        .foregroundColor(.red)
+                        .foregroundColor(.black)
                     
                     Text(lblBrandText)
                         .font(.custom("Inter", size: 14))

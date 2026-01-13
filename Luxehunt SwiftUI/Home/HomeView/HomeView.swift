@@ -144,10 +144,14 @@ struct HomeView: View {
                 homeViewModel.fetchTopTrendingProducts()
                 homeViewModel.fetchCategories()
             Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { _ in
-                   withAnimation {
-                       currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
-                   }
-               }
+                // 1. Check if the array has data to avoid division by zero
+                guard !homeViewModel.allBannerData.isEmpty else { return }
+                
+                withAnimation {
+                    // 2. Safely calculate the next index
+                    currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
+                }
+            }
          
             
            

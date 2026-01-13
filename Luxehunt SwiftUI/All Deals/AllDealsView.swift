@@ -44,8 +44,6 @@ struct AllDealsView: View {
                         })
                 }
                 HStack(spacing: 0){
-                   
-                   
                         ZStack{
                             Color.black
                             HStack{
@@ -57,10 +55,9 @@ struct AllDealsView: View {
                                     .foregroundColor(.white)
                             }
                         }.onTapGesture {
-                            print("All deals button pressed")
+                            dealViewModel.resetPagination()
+                            dealViewModel.fetchDealListWithFilters(category: "", search: "")
                         }
-                
-                  
                     ZStack{
                         LinearGradient(
                             gradient: Gradient(colors: [
@@ -88,6 +85,16 @@ struct AllDealsView: View {
                 
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(columns: columns, spacing: 8) {
+                        if dealViewModel.products.isEmpty{
+                            ForEach(0..<20, id: \.self){ _ in
+                                TrendingDealShimmerView(width: UIScreen.main.bounds.width  / 2.2,
+                                                        imageHeight: 280,
+                                                        totalHeight: 352
+                                )
+                                
+                            }
+                        }else{
+                        
                         ForEach(dealViewModel.products, id: \.id) { item in
                             TrendingDealView(
                                 imgTrendingDeal: item.image,
@@ -95,17 +102,10 @@ struct AllDealsView: View {
                                 contImageHeight: 280,
                                 contFrameHeight: 352
                             )
-//                            .onAppear {
-//                                if item.id == dealViewModel.products.last?.id {
-//                                    dealViewModel.applyFilters(category: selectCat, search: "")
-//                                }
-//                            }
+                            //
                         }
-                        if dealViewModel.isLoading {
-                            ProgressView()
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                        }
+                    }
+                       
                     }
                     .padding(.horizontal, 4)
                 }

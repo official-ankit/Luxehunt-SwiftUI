@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HeaderView: View {
     @State private var search: String = ""
+    @Binding var btnMenu:Bool
     @FocusState private var isFocused: Bool
     
     var body: some View {
@@ -41,11 +42,15 @@ struct HeaderView: View {
             
             Spacer()
             
-            // Right Icon
-            Image("iconList")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 24)
+            Button(action: {
+                btnMenu.toggle()
+            }, label: {
+                Image("iconList")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 24)
+            })
+           
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)

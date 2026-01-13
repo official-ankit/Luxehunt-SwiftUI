@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
+    @State var btnMenu:Bool = false
     @State private var currentIndex = 0
     @State var selectCat = ""
     @State var isNavigate:Bool = false
@@ -24,7 +25,7 @@ struct HomeView: View {
             Color.appColorBackground
                 .ignoresSafeArea()
             VStack(spacing: 0) {
-                HeaderView().padding(.top,20)
+                HeaderView(btnMenu: $btnMenu).padding(.top,20)
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
                         
@@ -138,6 +139,9 @@ struct HomeView: View {
             NavigationLink(isActive: $isNavigate, destination: {AllDealsView(selectCat: selectCat).navigationBarBackButtonHidden()}, label: {
                 EmptyView()
             })
+            if btnMenu{
+                SidebarView()
+            }
         }
         .onAppear{
                 homeViewModel.fetchAllBanner()
@@ -163,3 +167,24 @@ struct HomeView: View {
 //#Preview {
 //    HomeView()
 //}
+struct SidebarView:View {
+    
+    var body: some View {
+        
+        ZStack{
+            Color.black.opacity(0.5)
+            VStack(alignment: .leading){
+               
+                HStack{
+                    VStack{
+                        Text("First Menu").foregroundColor(Color.white)
+                    }.frame(maxWidth: UIScreen.main.bounds.width/1.8).frame(maxHeight:.infinity).background(Color.white)
+                    Spacer()
+                    VStack{
+                        
+                    }
+                }
+            }
+        }.ignoresSafeArea()
+    }
+}

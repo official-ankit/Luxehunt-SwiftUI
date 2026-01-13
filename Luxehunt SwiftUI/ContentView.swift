@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
         NavigationStack{
-           TabbarView()
+            TabbarView()
         }
+        
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}

@@ -11,9 +11,9 @@ struct TrendingDealView: View {
     @State var imgTrendingDeal = ""
     @State var lblBrandName = "Addidas"
     @State var lblBrandText = "Java"
-    @State var lblOfferPrice = "783"
-    @State var lblPrice = "602"
-    @State var lblDiscount = "20"
+    @State var lblOfferPrice = 783.89
+    @State var lblPrice = 57.9
+    @State var lblDiscount = 567.90
     
     var contImageHeight: CGFloat = 184
     var contFrameHeight: CGFloat = 252
@@ -45,6 +45,7 @@ struct TrendingDealView: View {
                     
                     Text(lblBrandText)
                         .font(.custom("Inter", size: 14))
+                        .foregroundColor(.black)
                     
                     HStack(spacing: 6) {
                         Text("$\(lblOfferPrice)")
@@ -54,9 +55,11 @@ struct TrendingDealView: View {
                         
                         Text("$\(lblPrice)")
                             .font(.custom("Inter", size: 14))
+                            .foregroundColor(.black)
                         
                         Text("$\(lblDiscount)")
                             .font(.custom("Inter", size: 14))
+                            .foregroundColor(.black)
                     }
                 }
                 .padding(10)

@@ -95,13 +95,15 @@ struct AllDealsView: View {
                             }
                         }else{
                         
-                        ForEach(dealViewModel.products, id: \.id) { item in
+                        ForEach(dealViewModel.products, id: \._id) { item in
                             TrendingDealView(
                                 imgTrendingDeal: item.image,
                                 lblBrandName: item.brand,
-//                                lblBrandText: item.title,
-//                                lblPrice: item.offer_price,
-//                                lblDiscount: item.original_price,
+                                lblBrandText: item.title,
+                                lblOfferPrice:Double(item.originalPrice ?? 0),
+                                lblPrice: Double(item.offerPrice ?? 0),
+                               
+                                
                                 contImageHeight: 280,
                                 contFrameHeight: 352
                             )
@@ -175,3 +177,5 @@ extension Color {
         )
     }
 }
+
+

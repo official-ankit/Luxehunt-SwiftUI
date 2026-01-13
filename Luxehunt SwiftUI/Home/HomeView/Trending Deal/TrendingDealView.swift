@@ -14,7 +14,6 @@ struct TrendingDealView: View {
     @State var lblOfferPrice = "783"
     @State var lblPrice = "602"
     @State var lblDiscount = "20"
-    @State var isNavigate:Bool = false
     
     var contImageHeight: CGFloat = 184
     var contFrameHeight: CGFloat = 252
@@ -72,12 +71,7 @@ struct TrendingDealView: View {
                     .stroke(Color.gray.opacity(0.4), lineWidth: 1)
             )
             
-        }.onTapGesture {
-            isNavigate = true
-         }
-         NavigationLink(isActive: $isNavigate, destination: {WebView()}, label: {
-             EmptyView()
-         })
+        }
         .cornerRadius(8)
     }
 }

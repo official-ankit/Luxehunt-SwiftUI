@@ -13,6 +13,7 @@ struct HomeView: View {
     @State private var currentIndex = 0
     @State var selectCat = ""
     @State var isNavigate:Bool = false
+    @State var isNavigateTrending:Bool = false
     @State var categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
     
     
@@ -51,8 +52,12 @@ struct HomeView: View {
                                     }
                                 }else{
                                 ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
+                                    NavigationLink(destination: {
+                                        WebView(data: topTrendingData.product)
+                                    }, label: {
+                                        TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "", constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
+                                    })
                                     
-                                    TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "", constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
                                 }
                             }
                             }
@@ -139,6 +144,8 @@ struct HomeView: View {
             NavigationLink(isActive: $isNavigate, destination: {AllDealsView(selectCat: selectCat).navigationBarBackButtonHidden()}, label: {
                 EmptyView()
             })
+            
+            
             if btnMenu{
                 SidebarView()
             }

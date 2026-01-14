@@ -12,6 +12,7 @@ struct AllDealsView: View {
     @StateObject var dealViewModel = DealsViewModel()
     @State var searchProduct = ""
     @State var openFilterSheet:Bool = false
+    @State private var showFilter = false
     var selectCat = ""
    
 
@@ -55,7 +56,7 @@ struct AllDealsView: View {
                                     .foregroundColor(.white)
                             }
                         }.onTapGesture {
-                            dealViewModel.applyFilters(category: nil, search: nil)
+                            dealViewModel.applyFilters(category: nil, search: nil, sortBrand: nil, sortPrice: nil,priceRanges: [])
                         }
                     ZStack{
                         LinearGradient(
@@ -129,6 +130,7 @@ struct AllDealsView: View {
                     HStack(alignment: .center){
                        Button(action: {
                            openFilterSheet = true
+                           
                        },
                               label: {
                            Image(systemName: "line.3.horizontal.decrease").foregroundColor(.black)
@@ -144,10 +146,10 @@ struct AllDealsView: View {
                 Color.black.opacity(0.5).ignoresSafeArea()
             }
         } .onAppear {
-            dealViewModel.applyFilters(category: selectCat, search: nil)
+            dealViewModel.applyFilters(category: selectCat, search: nil, sortBrand: nil, sortPrice: nil,priceRanges: [])
                             }
         .sheet(isPresented: $openFilterSheet, content: {
-            FilterAndSortView(isDismiss: $openFilterSheet)
+            FilterAndSortView( dealViewModel: dealViewModel,isDismiss: $openFilterSheet)
         })
     }
 }

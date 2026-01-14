@@ -102,6 +102,12 @@ struct AllDealsView: View {
                                 lblBrandText: item.title,
                                 lblOfferPrice:Double(item.originalPrice ?? 0),
                                 lblPrice: Double(item.offerPrice ?? 0),
+                                lblDiscount: {
+                                    let original = Double(item.originalPrice ?? 0)
+                                    let offer = Double(item.offerPrice ?? 0)
+                                    guard original > 0 else { return 0 }
+                                    return ((original - offer) / original) * 100
+                                }(),
                                
                                 
                                 contImageHeight: 280,

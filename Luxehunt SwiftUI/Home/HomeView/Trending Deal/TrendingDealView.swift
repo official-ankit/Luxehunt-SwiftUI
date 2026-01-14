@@ -48,18 +48,22 @@ struct TrendingDealView: View {
                         .foregroundColor(.black)
                     
                     HStack(spacing: 6) {
-                        Text("$\(lblOfferPrice)")
+                        Text("$\(lblOfferPrice,specifier: "%.0f")")
                             .font(.custom("Inter", size: 14))
                             .foregroundColor(.gray)
+                            
                             .strikethrough()
                         
-                        Text("$\(lblPrice)")
+                        Text("$\(lblPrice, specifier: "%.0f")")
                             .font(.custom("Inter", size: 14))
                             .foregroundColor(.black)
+                       
                         
-                        Text("$\(lblDiscount)")
+                        Text("-\(lblDiscount, specifier: "%.0f")%")
                             .font(.custom("Inter", size: 14))
-                            .foregroundColor(.black)
+                            .padding(.horizontal,5)
+                            .foregroundColor(.white).background(Color.black)
+                            .cornerRadius(4)
                     }
                 }
                 .padding(10)

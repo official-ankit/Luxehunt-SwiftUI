@@ -14,9 +14,9 @@ struct AllDealsView: View {
     @State var openFilterSheet:Bool = false
     @State private var showFilter = false
     var selectCat = ""
-   
-
     @Environment(\.dismiss) var dismiss
+    
+    
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -149,7 +149,7 @@ struct AllDealsView: View {
             dealViewModel.applyFilters(category: selectCat, search: nil, sortBrand: nil, sortPrice: nil,priceRanges: [])
                             }
         .sheet(isPresented: $openFilterSheet, content: {
-            FilterAndSortView( dealViewModel: dealViewModel,isDismiss: $openFilterSheet)
+            FilterAndSortView( dealViewModel: dealViewModel,selectCat: selectCat,isDismiss: $openFilterSheet)
         })
     }
 }

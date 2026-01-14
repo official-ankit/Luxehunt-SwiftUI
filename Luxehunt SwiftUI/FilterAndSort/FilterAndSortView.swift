@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FilterAndSortView: View {
     @ObservedObject var dealViewModel: DealsViewModel
+    @State var selectCat = ""
 
     let sortFilter = ["New", "Low - High", "High - Low"]
     let priceFilter = ["Under $100", "$100 - $250", "$250 - $500", "$500 - $750", "Over $750"]
@@ -156,7 +157,7 @@ struct FilterAndSortView: View {
                     })
                     
                     Button(action: {
-                        dealViewModel.applyFilters(category: nil, search: nil, sortBrand: nil, sortPrice: mapSortToAPI(selectedSort), priceRanges: [])
+                        dealViewModel.applyFilters(category: selectCat, search: nil, sortBrand: nil, sortPrice: mapSortToAPI(selectedSort), priceRanges: [])
                         
                     }, label: {
                         Text("Apply Filter")

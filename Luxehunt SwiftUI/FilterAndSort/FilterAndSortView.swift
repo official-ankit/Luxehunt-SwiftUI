@@ -10,7 +10,7 @@ import SwiftUI
 struct FilterAndSortView: View {
     @ObservedObject var dealViewModel: DealsViewModel
     @State var selectCat = ""
-
+    
     let sortFilter = ["New", "Low - High", "High - Low"]
     let priceFilter = ["Under $100", "$100 - $250", "$250 - $500", "$500 - $750", "Over $750"]
     let designerFilter = ""
@@ -118,14 +118,14 @@ struct FilterAndSortView: View {
                                 LazyVGrid(columns: priceColumns, spacing: 12) {
                                     ForEach(priceFilter, id: \.self) { filter in
                                         FilterCell(filterName: filter,
-                                        isSelectedFilter: selectedPrices.contains(filter))
-                                            .onTapGesture {
-                                                if selectedPrices.contains(filter) {
-                                                                        selectedPrices.remove(filter)   // deselect
-                                                                    } else {
-                                                                        selectedPrices.insert(filter)   // select
-                                                                    }
+                                                   isSelectedFilter: selectedPrices.contains(filter))
+                                        .onTapGesture {
+                                            if selectedPrices.contains(filter) {
+                                                selectedPrices.remove(filter)   // deselect
+                                            } else {
+                                                selectedPrices.insert(filter)   // select
                                             }
+                                        }
                                     }
                                     Spacer()
                                     
@@ -157,7 +157,7 @@ struct FilterAndSortView: View {
                     })
                     
                     Button(action: {
-                        dealViewModel.applyFilters(category: selectCat, search: nil, sortBrand: nil, sortPrice: mapSortToAPI(selectedSort), priceRanges: [])
+                        dealViewModel.applyFilters(category: selectCat, search: nil, sortBrand: nil, sortPrice: mapSortToAPI(selectedSort), priceRanges: mapPricesToAPI(selectedPrices))
                         
                     }, label: {
                         Text("Apply Filter")
@@ -184,17 +184,50 @@ struct FilterAndSortView: View {
         }
     }
     private func mapSortToAPI(_ sort: String?) -> String? {
-            switch sort {
-            case "Low - High":
-                return "lowtohigh"
-            case "High - Low":
-                return "hightolow"
-            case "New":
-                return "new"
+        switch sort {
+        case "Low - High":
+            return "lowtohigh"
+        case "High - Low":
+            return "hightolow"
+        case "New":
+            return "new"
+        default:
+            return nil
+        }
+    }
+    private func mapPricesToAPI(_ prices: Set<String>) -> [String] {
+
+        let ranges: [[String: Int]] = prices.compactMap { price in
+            switch price {
+            case "Under $100":
+                return ["$lte": 100]
+
+            case "$100 - $250":
+                return ["$gte": 100, "$lte": 250]
+
+            case "$250 - $500":
+                return ["$gte": 250, "$lte": 500]
+
+            case "$500 - $750":
+                return ["$gte": 500, "$lte": 750]
+
+            case "Over $750":
+                return ["$gte": 750]
+
             default:
                 return nil
             }
         }
+
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: ranges),
+              let jsonString = String(data: jsonData, encoding: .utf8) else {
+            return []
+        }
+
+        return [jsonString]   
+    }
+
+    
 }
 
 //#Preview {

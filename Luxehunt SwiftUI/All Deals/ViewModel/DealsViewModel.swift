@@ -29,9 +29,9 @@ class DealsViewModel: ObservableObject {
     private var searchText: String?
 
     // NEW
-    private var sortBrand: String?          // "asc" / "desc"
-    private var sort: String?          // "low" / "high"
-    private var selectedPriceRanges: [String] = [] // multiple values
+    private var sortBrand: String?
+    private var sort: String?
+    private var selectedPriceRanges: [String] = [] 
 
     // MARK: - Apply Filters
     func applyFilters(
@@ -85,7 +85,7 @@ class DealsViewModel: ObservableObject {
 
         // Price Filters (ARRAY)
         for price in selectedPriceRanges {
-            url += "&price[]=\(price)"
+            url += "&price_filter[]=\(price)"
         }
 
         appServer.getApi(

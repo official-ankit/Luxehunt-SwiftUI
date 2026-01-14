@@ -9,12 +9,12 @@ import SwiftUI
 
 struct SalesView: View {
     @StateObject var viewModel = SalesViewModel()
-    
+    @State var btnMenu = false
     var body: some View {
         ZStack{
             Color.appColorBackground
             VStack{
-                HeaderView()
+                HeaderView(btnMenu:$btnMenu)
                 List{
                     ForEach(viewModel.salesData, id: \.id) { item in
                         SalesCell(lblsalesHeading: item.head ?? "", lblsalesSubHeading: item.title)
@@ -28,6 +28,6 @@ struct SalesView: View {
     }
 }
 
-#Preview {
-    SalesView()
-}
+//#Preview {
+//    SalesView()
+//}

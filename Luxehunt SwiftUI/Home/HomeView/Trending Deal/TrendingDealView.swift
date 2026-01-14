@@ -11,9 +11,10 @@ struct TrendingDealView: View {
     @State var imgTrendingDeal = ""
     @State var lblBrandName = "Addidas"
     @State var lblBrandText = "Java"
-    @State var lblOfferPrice = "783"
-    @State var lblPrice = "602"
-    @State var lblDiscount = "20"
+    @State var lblOfferPrice = 783.89
+    @State var lblPrice = 57.9
+    @State var lblDiscount = 567.90
+    @State var isLuxePass:Bool = false
     
     var contImageHeight: CGFloat = 184
     var contFrameHeight: CGFloat = 252
@@ -31,7 +32,25 @@ struct TrendingDealView: View {
                             height: contImageHeight
                         )
                         .clipped()
-                } placeholder: {
+                        .overlay(content: {
+                            if isLuxePass{
+                                ZStack{
+                                    Color.luxepassBlur
+                                    VStack{
+                                        Image(systemName: "lock.fill").foregroundColor(.white)
+                                        Text("LUXEPASS").font(.custom("PlayfairDisplay-Regular", size: 12))
+                                            .foregroundColor(.white)
+                                        Text("Premium Access").font(.custom("Inter", size: 10))
+                                            .foregroundColor(.white)
+                                    }
+                                }.frame(width: 110,height: 79)
+                                    .cornerRadius(8)
+
+                            }
+                            
+                                                        
+                        })
+                }placeholder: {
                     Color.gray.opacity(0.1)
                         .frame(
                             width: constFrameWidht,
@@ -41,22 +60,29 @@ struct TrendingDealView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(lblBrandName)
                         .font(.custom("PlayfairDisplay-Regular", size: 16))
-                        .foregroundColor(.red)
+                        .foregroundColor(.black)
                     
                     Text(lblBrandText)
                         .font(.custom("Inter", size: 14))
+                        .foregroundColor(.black)
                     
                     HStack(spacing: 6) {
-                        Text("$\(lblOfferPrice)")
+                        Text("$\(lblOfferPrice,specifier: "%.0f")")
                             .font(.custom("Inter", size: 14))
                             .foregroundColor(.gray)
+                            
                             .strikethrough()
                         
-                        Text("$\(lblPrice)")
+                        Text("$\(lblPrice, specifier: "%.0f")")
                             .font(.custom("Inter", size: 14))
+                            .foregroundColor(.black)
+                       
                         
-                        Text("$\(lblDiscount)")
+                        Text("-\(lblDiscount, specifier: "%.0f")%")
                             .font(.custom("Inter", size: 14))
+                            .padding(.horizontal,5)
+                            .foregroundColor(.white).background(Color.black)
+                            .cornerRadius(4)
                     }
                 }
                 .padding(10)
@@ -71,7 +97,8 @@ struct TrendingDealView: View {
                     .stroke(Color.gray.opacity(0.4), lineWidth: 1)
             )
             
-        } .cornerRadius(8)
+        }
+        .cornerRadius(8)
     }
 }
 

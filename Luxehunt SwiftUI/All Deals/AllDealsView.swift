@@ -10,11 +10,13 @@ import SwiftUI
 struct AllDealsView: View {
     
     @StateObject var dealViewModel = DealsViewModel()
-    @State var search = ""
+    @State var searchProduct = ""
     @State var openFilterSheet:Bool = false
-   
-
+    @State private var showFilter = false
+    var selectCat = ""
     @Environment(\.dismiss) var dismiss
+    
+    
     private let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -34,7 +36,7 @@ struct AllDealsView: View {
                             .tint(.black)
                     })
                     
-                    TextField("Search", text: $search)
+                    TextField("Search", text: $searchProduct)
                         .frame(height: 30)
                         .padding(.leading, 10)
                         .overlay(content: {
@@ -43,8 +45,6 @@ struct AllDealsView: View {
                         })
                 }
                 HStack(spacing: 0){
-                   
-                   
                         ZStack{
                             Color.black
                             HStack{
@@ -56,10 +56,8 @@ struct AllDealsView: View {
                                     .foregroundColor(.white)
                             }
                         }.onTapGesture {
-                            print("All deals button pressed")
+                            dealViewModel.applyFilters(category: nil, search: nil, sortBrand: nil, sortPrice: nil,priceRanges: [])
                         }
-                
-                  
                     ZStack{
                         LinearGradient(
                             gradient: Gradient(colors: [
@@ -87,35 +85,52 @@ struct AllDealsView: View {
                 
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(columns: columns, spacing: 8) {
-                        ForEach(dealViewModel.products, id: \.id) { item in
+                        if dealViewModel.products.isEmpty{
+                            ForEach(0..<20, id: \.self){ _ in
+                                TrendingDealShimmerView(width: UIScreen.main.bounds.width  / 2.2,
+                                                        imageHeight: 280,
+                                                        totalHeight: 352
+                                )
+                                
+                            }
+                        }else{
+                        
+                        ForEach(dealViewModel.products, id: \._id) { item in
                             TrendingDealView(
                                 imgTrendingDeal: item.image,
                                 lblBrandName: item.brand,
+                                lblBrandText: item.title,
+                                lblOfferPrice:Double(item.originalPrice ?? 0),
+                                lblPrice: Double(item.offerPrice ?? 0),
+                                lblDiscount: {
+                                    let original = Double(item.originalPrice ?? 0)
+                                    let offer = Double(item.offerPrice ?? 0)
+                                    guard original > 0 else { return 0 }
+                                    return ((original - offer) / original) * 100
+                                }(),
+                               
+                                isLuxePass: item.luxepassOnly ?? false,
                                 contImageHeight: 280,
                                 contFrameHeight: 352
-                            )
-                            .onAppear {
-                                if item.id == dealViewModel.products.last?.id {
-                                    dealViewModel.fetchDealList()
+                            ).onAppear {
+                                if item._id == dealViewModel.products.last?._id {
+                                    dealViewModel.loadNextPage()
                                 }
                             }
+                           
                         }
-                        if dealViewModel.isLoading {
-                            ProgressView()
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                        }
+                    }
+                       
                     }
                     .padding(.horizontal, 4)
                 }
-                .onAppear {
-                    dealViewModel.fetchDealList()
-                }
+               
                 ZStack{
                     Color.white
                     HStack(alignment: .center){
                        Button(action: {
                            openFilterSheet = true
+                           
                        },
                               label: {
                            Image(systemName: "line.3.horizontal.decrease").foregroundColor(.black)
@@ -130,8 +145,11 @@ struct AllDealsView: View {
             if openFilterSheet{
                 Color.black.opacity(0.5).ignoresSafeArea()
             }
-        }.sheet(isPresented: $openFilterSheet, content: {
-            FilterAndSortView()
+        } .onAppear {
+            dealViewModel.applyFilters(category: selectCat, search: nil, sortBrand: nil, sortPrice: nil,priceRanges: [])
+                            }
+        .sheet(isPresented: $openFilterSheet, content: {
+            FilterAndSortView( dealViewModel: dealViewModel,selectCat: selectCat,isDismiss: $openFilterSheet)
         })
     }
 }
@@ -168,3 +186,5 @@ extension Color {
         )
     }
 }
+
+

@@ -9,8 +9,11 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var homeViewModel = HomeViewModel()
+    @State var btnMenu:Bool = false
     @State private var currentIndex = 0
-    
+    @State var selectCat = ""
+    @State var isNavigate:Bool = false
+    @State var isNavigateTrending:Bool = false
     @State var categoryImage = ["CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty","CategoryShoes", "CategoryAccessories", "CategoryBeauty"]
     
     
@@ -23,15 +26,23 @@ struct HomeView: View {
             Color.appColorBackground
                 .ignoresSafeArea()
             VStack(spacing: 0) {
-                HeaderView().padding(.top,20)
+                HeaderView(btnMenu: $btnMenu).padding(.top,20)
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
                         
+                            
+                        
+                        
                         TabView(selection: $currentIndex) {
-                            ForEach(Array(homeViewModel.allBannerData.enumerated()), id: \.element.id) { index, item in
-                                TopBigImageView(imgBanner: item.image ?? "")
-                                    .tag(index)
-                                    .padding(.horizontal, 0)
+                            if homeViewModel.allBannerData.isEmpty{
+                                ShimmerView()
+                            }else{
+                                ForEach(Array(homeViewModel.allBannerData.enumerated()), id: \.element.id) { index, item in
+                                    TopBigImageView(imgBanner: item.image ?? "")
+                                        .tag(index)
+                                        .padding(.horizontal, 0)
+                                }
+
                             }
                         }.cornerRadius(8)
                         .frame(height: 490)
@@ -49,8 +60,12 @@ struct HomeView: View {
                                     }
                                 }else{
                                 ForEach(homeViewModel.topTrendingProducts, id: \.id){ topTrendingData in
+                                    NavigationLink(destination: {
+                                        WebView(data: topTrendingData.product)
+                                    }, label: {
+                                        TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "",lblBrandText: topTrendingData.product.title ?? "",isLuxePass: topTrendingData.product.luxepass_only ?? false, constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
+                                    })
                                     
-                                    TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "", constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
                                 }
                             }
                             }
@@ -106,38 +121,56 @@ struct HomeView: View {
                         
                       
                         HeaderLabel(headerLabel: "Shop by category")
-                        if (homeViewModel.categoryModel.isEmpty ){
-                            ProgressView()
-                        } else {
                             LazyVGrid(columns: columns, spacing: 5) {
-                                ForEach(Array(homeViewModel.categoryModel.enumerated()),
-                                        id: \.element.id) { index, category in
-                                    let imageName = categoryImage.indices.contains(index)
-                                        ? categoryImage[index]
-                                        : "CategoryAccessories"
-                                    CategoryView(
-                                        category: category,
-                                        imgCategory: imageName
-                                    )
+                                if homeViewModel.categoryModel.isEmpty{
+                                    
+                                }else{
+                                    ForEach(Array(homeViewModel.categoryModel.enumerated()),
+                                            id: \.element.id) { index, category in
+                                        let imageName = categoryImage.indices.contains(index)
+                                            ? categoryImage[index]
+                                            : "CategoryAccessories"
+                                        CategoryView(
+                                            category: category,
+                                            imgCategory: imageName
+                                        
+                                        ).onTapGesture {
+                                            selectCat = category.name
+                                            isNavigate.toggle()
+                                        }
+                                    }
                                 }
+                                
                             }
 
                             
-                        }
+                        
                     }
                 }
             }.padding(.top,20).edgesIgnoringSafeArea(.top)
                 .padding(.horizontal,20)
+            
+            
+            NavigationLink(isActive: $isNavigate, destination: {AllDealsView(selectCat: selectCat).navigationBarBackButtonHidden()}, label: {
+                EmptyView()
+            })
+            
+            
+            if btnMenu{
+                SidebarView()
+            }
         }
         .onAppear{
                 homeViewModel.fetchAllBanner()
                 homeViewModel.fetchTopTrendingProducts()
                 homeViewModel.fetchCategories()
             Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { _ in
-                   withAnimation {
-                       currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
-                   }
-               }
+                guard !homeViewModel.allBannerData.isEmpty else { return }
+                
+                withAnimation {
+                    currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
+                }
+            }
          
             
            
@@ -149,3 +182,24 @@ struct HomeView: View {
 //#Preview {
 //    HomeView()
 //}
+struct SidebarView:View {
+    
+    var body: some View {
+        
+        ZStack{
+            Color.black.opacity(0.5)
+            VStack(alignment: .leading){
+               
+                HStack{
+                    VStack{
+                        Text("First Menu").foregroundColor(Color.white)
+                    }.frame(maxWidth: UIScreen.main.bounds.width/1.8).frame(maxHeight:.infinity).background(Color.white)
+                    Spacer()
+                    VStack{
+                        
+                    }
+                }
+            }
+        }.ignoresSafeArea()
+    }
+}

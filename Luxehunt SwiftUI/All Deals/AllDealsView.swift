@@ -55,8 +55,7 @@ struct AllDealsView: View {
                                     .foregroundColor(.white)
                             }
                         }.onTapGesture {
-                            dealViewModel.resetPagination()
-                            dealViewModel.fetchDealListWithFilters(category: "", search: "")
+                            dealViewModel.applyFilters(category: nil, search: nil)
                         }
                     ZStack{
                         LinearGradient(
@@ -112,8 +111,12 @@ struct AllDealsView: View {
                                 
                                 contImageHeight: 280,
                                 contFrameHeight: 352
-                            )
-                            //
+                            ).onAppear {
+                                if item._id == dealViewModel.products.last?._id {
+                                    dealViewModel.loadNextPage()
+                                }
+                            }
+                           
                         }
                     }
                        
@@ -141,9 +144,7 @@ struct AllDealsView: View {
                 Color.black.opacity(0.5).ignoresSafeArea()
             }
         } .onAppear {
-//            dealViewModel.resetPagination()
-                                print("Selected Category:", selectCat)
-                                dealViewModel.fetchDealListWithFilters(category: selectCat, search: "")
+            dealViewModel.applyFilters(category: selectCat, search: nil)
                             }
         .sheet(isPresented: $openFilterSheet, content: {
             FilterAndSortView(isDismiss: $openFilterSheet)

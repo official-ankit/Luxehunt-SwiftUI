@@ -134,7 +134,8 @@ struct AllDealsView: View {
                        },
                               label: {
                            Image(systemName: "line.3.horizontal.decrease").foregroundColor(.black)
-                           Text("Filter and Sort")
+                           Text("Filter and Sort").foregroundColor(.black)
+                               .font(.custom("Inter", size: 16))
                        })
                         
                     }

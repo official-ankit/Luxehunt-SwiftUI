@@ -143,7 +143,8 @@ struct FilterAndSortView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        
+                        dealViewModel.resetAllFilters()
+                        isDismiss.toggle()
                     }, label: {
                         Text("Reset Filter")
                             .foregroundColor(.black)
@@ -158,6 +159,7 @@ struct FilterAndSortView: View {
                     
                     Button(action: {
                         dealViewModel.applyFilters(category: selectCat, search: nil, sortBrand: nil, sortPrice: mapSortToAPI(selectedSort), priceRanges: mapPricesToAPI(selectedPrices))
+                        isDismiss.toggle()
                         
                     }, label: {
                         Text("Apply Filter")
@@ -224,7 +226,7 @@ struct FilterAndSortView: View {
             return []
         }
 
-        return [jsonString]   
+        return [jsonString]
     }
 
     

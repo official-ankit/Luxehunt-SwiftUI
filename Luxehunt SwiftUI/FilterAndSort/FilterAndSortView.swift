@@ -12,9 +12,12 @@ struct FilterAndSortView: View {
     let priceFilter = ["Under $100", "$100 - $250", "$250 - $500", "$500 - $750", "Over $750"]
     let designerFilter = ""
     @StateObject var filterViewModel = FilterViewModel()
-    
     @Binding var isDismiss:Bool
     @State private var showDesignerView = false
+    @State private var selectedSort: String? = nil
+    @State private var selectedPrice: String? = nil
+    @State private var selectedDesigner: String? = nil
+    
     
     let designerColumns = [
         GridItem(.flexible(), spacing: 10),
@@ -49,106 +52,120 @@ struct FilterAndSortView: View {
                 
                 if showDesignerView {
                     DesignerView(
-                            designerData: filterViewModel,
-                            onBack: {
-                                showDesignerView = false
+                        designerData: filterViewModel,
+                        onBack: {
+                            showDesignerView = false
+                        }
+                    )
+                } else {
+                    ZStack{
+                        VStack(alignment: .leading,spacing: 10){
+                            FilterHeaderLabel(lblHeader: "Sort By")
+                            HStack{
+                                ForEach(sortFilter, id: \.self) { filter in
+                                    FilterCell(filterName: filter, isSelectedFilter: selectedSort == filter)
+                                        .onTapGesture {
+                                            selectedSort = filter
+                                            print("Sort selected:", filter)
+                                        }
+                                }
+                                Spacer()
+                                
                             }
-                        )
-                            } else {
-                                ZStack{
-                                    VStack(alignment: .leading,spacing: 10){
-                                        FilterHeaderLabel(lblHeader: "Sort By")
-                                        HStack{
-                                            ForEach(sortFilter, id: \.self) { filter in
-                                                FilterCell(filterName: filter)
-                                            }
-                                            Spacer()
-                                            
+                        }.padding(.horizontal,10)
+                            .padding(.vertical,20)
+                    }.overlay(content: {
+                        RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
+                    })
+                    ZStack{
+                        VStack(alignment: .leading,spacing: 10){
+                            FilterHeaderLabel(lblHeader: "Designer By")
+                            LazyVGrid(columns: designerColumns, spacing: 12) {
+                                ForEach(Array(filterViewModel.filterData?.data?.prefix(6) ?? []),
+                                        id: \.self) { item in
+                                    FilterCell(filterName: item, isSelectedFilter: selectedDesigner == item)
+                                        .onTapGesture {
+                                            selectedDesigner = item
+                                            print("Designer selected:", item)
                                         }
-                                    }.padding(.horizontal,10)
-                                        .padding(.vertical,20)
-                                }.overlay(content: {
-                                    RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
-                                })
-                                ZStack{
-                                    VStack(alignment: .leading,spacing: 10){
-                                        FilterHeaderLabel(lblHeader: "Designer By")
-                                        LazyVGrid(columns: designerColumns, spacing: 12) {
-                                            ForEach(Array(filterViewModel.filterData?.data?.prefix(6) ?? []),
-                                                    id: \.self) { item in
-                                                FilterCell(filterName: item)
-                                            }
-                                        }
-                                        HStack{
-                                            Spacer()
-                                            Button(action: {
-                                               showDesignerView = true
-                                            }, label: {
-                                                Text("See more").font(.custom("Inter", size: 16))
-                                                    .foregroundColor(.gray)
-                                            })
-                                            
-                                        }
-                                        
-                                        
-                                    }.padding(.horizontal,10)
-                                        .padding(.vertical,20)
-                                }.overlay(content: {
-                                    RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
-                                })
-                                ZStack{
-                                    VStack(alignment: .leading,spacing: 10){
-                                        FilterHeaderLabel(lblHeader: "Price By")
-                                        HStack{
-                                            LazyVGrid(columns: priceColumns, spacing: 12) {
-                                                ForEach(priceFilter, id: \.self) { filter in
-                                                    FilterCell(filterName: filter)
-                                                }
-                                                Spacer()
-                                                
-                                            }
-                                        }
-                                    }.padding(.horizontal,10)
-                                        .padding(.vertical,20)
-                                }.overlay(content: {
-                                    RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
-                                })
+                                }
                             }
-                
-                
-                
-                    HStack {
-                        Spacer()
-                        Button(action: {
+                            HStack{
+                                Spacer()
+                                Button(action: {
+                                    showDesignerView = true
+                                }, label: {
+                                    Text("See more").font(.custom("Inter", size: 16))
+                                        .foregroundColor(.gray)
+                                })
+                                
+                            }
                             
-                        }, label: {
-                            Text("Reset Filter")
-                                .foregroundColor(.black)
-                                .font(.custom("Intel", size: 14))
-                                .padding(.horizontal, 10)
-                                .frame(height: 45)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .stroke(Color.black, lineWidth: 1)
-                                )
-                        })
-                        
-                        Button(action: {
                             
-                        }, label: {
-                            Text("Apply Filter")
-                                .foregroundColor(.white)
-                                .font(.custom("Intel", size: 14))
-                                .padding(.horizontal, 10)
-                                .frame(height: 45)
-                                .background(Color.black)
-                                .cornerRadius(4)
-                        })
+                        }.padding(.horizontal,10)
+                            .padding(.vertical,20)
+                    }.overlay(content: {
+                        RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
+                    })
+                    ZStack{
+                        VStack(alignment: .leading,spacing: 10){
+                            FilterHeaderLabel(lblHeader: "Price By")
+                            HStack{
+                                LazyVGrid(columns: priceColumns, spacing: 12) {
+                                    ForEach(priceFilter, id: \.self) { filter in
+                                        FilterCell(filterName: filter, isSelectedFilter: selectedPrice == filter)
+                                            .onTapGesture {
+                                                selectedPrice = filter
+                                                print("Price selected:", filter)
+                                            }
+                                    }
+                                    Spacer()
+                                    
+                                }
+                            }
+                        }.padding(.horizontal,10)
+                            .padding(.vertical,20)
+                    }.overlay(content: {
+                        RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
+                    })
+                }
+                
+                
+                
+                HStack {
+                    Spacer()
+                    Button(action: {
                         
-                        
-                    }
+                    }, label: {
+                        Text("Reset Filter")
+                            .foregroundColor(.black)
+                            .font(.custom("Intel", size: 14))
+                            .padding(.horizontal, 10)
+                            .frame(height: 45)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .stroke(Color.black, lineWidth: 1)
+                            )
+                    })
                     
-                    .frame(height: 45)
+                    Button(action: {
+                        print("Sort:", selectedSort ?? "None")
+                        print("Designer:", selectedDesigner ?? "None")
+                        print("Price:", selectedPrice ?? "None")
+                    }, label: {
+                        Text("Apply Filter")
+                            .foregroundColor(.white)
+                            .font(.custom("Intel", size: 14))
+                            .padding(.horizontal, 10)
+                            .frame(height: 45)
+                            .background(Color.black)
+                            .cornerRadius(4)
+                    })
+                    
+                    
+                }
+                
+                .frame(height: 45)
                 
                 Spacer()
                 

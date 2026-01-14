@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FilterCell: View {
     @State var filterName:String = ""
+    @State var isSelectedFilter: Bool
     var body: some View {
         VStack(alignment: .leading){
             Text(filterName).foregroundColor(.black)

@@ -63,7 +63,7 @@ struct HomeView: View {
                                     NavigationLink(destination: {
                                         WebView(data: topTrendingData.product)
                                     }, label: {
-                                        TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "",lblBrandText: topTrendingData.product.title ?? "", constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
+                                        TrendingDealView(imgTrendingDeal: topTrendingData.product.image ?? "", lblBrandName: topTrendingData.product.brand ?? "",lblBrandText: topTrendingData.product.title ?? "",isLuxePass: topTrendingData.product.luxepass_only ?? false, constFrameWidht: CGFloat(Int(UIScreen.main.bounds.width / 2.8)) )
                                     })
                                     
                                 }

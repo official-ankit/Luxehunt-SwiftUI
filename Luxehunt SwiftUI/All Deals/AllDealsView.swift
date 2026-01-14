@@ -108,7 +108,7 @@ struct AllDealsView: View {
                                     return ((original - offer) / original) * 100
                                 }(),
                                
-                                
+                                isLuxePass: item.luxepassOnly ?? false,
                                 contImageHeight: 280,
                                 contFrameHeight: 352
                             ).onAppear {

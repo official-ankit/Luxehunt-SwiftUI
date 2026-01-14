@@ -14,6 +14,7 @@ struct TrendingDealView: View {
     @State var lblOfferPrice = 783.89
     @State var lblPrice = 57.9
     @State var lblDiscount = 567.90
+    @State var isLuxePass:Bool = false
     
     var contImageHeight: CGFloat = 184
     var contFrameHeight: CGFloat = 252
@@ -31,7 +32,25 @@ struct TrendingDealView: View {
                             height: contImageHeight
                         )
                         .clipped()
-                } placeholder: {
+                        .overlay(content: {
+                            if isLuxePass{
+                                ZStack{
+                                    Color.luxepassBlur
+                                    VStack{
+                                        Image(systemName: "lock.fill").foregroundColor(.white)
+                                        Text("LUXEPASS").font(.custom("PlayfairDisplay-Regular", size: 12))
+                                            .foregroundColor(.white)
+                                        Text("Premium Access").font(.custom("Inter", size: 10))
+                                            .foregroundColor(.white)
+                                    }
+                                }.frame(width: 110,height: 79)
+                                    .cornerRadius(8)
+
+                            }
+                            
+                                                        
+                        })
+                }placeholder: {
                     Color.gray.opacity(0.1)
                         .frame(
                             width: constFrameWidht,

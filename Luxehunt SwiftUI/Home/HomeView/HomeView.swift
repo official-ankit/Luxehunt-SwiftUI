@@ -30,11 +30,19 @@ struct HomeView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 0) {
                         
+                            
+                        
+                        
                         TabView(selection: $currentIndex) {
-                            ForEach(Array(homeViewModel.allBannerData.enumerated()), id: \.element.id) { index, item in
-                                TopBigImageView(imgBanner: item.image ?? "")
-                                    .tag(index)
-                                    .padding(.horizontal, 0)
+                            if homeViewModel.allBannerData.isEmpty{
+                                ShimmerView()
+                            }else{
+                                ForEach(Array(homeViewModel.allBannerData.enumerated()), id: \.element.id) { index, item in
+                                    TopBigImageView(imgBanner: item.image ?? "")
+                                        .tag(index)
+                                        .padding(.horizontal, 0)
+                                }
+
                             }
                         }.cornerRadius(8)
                         .frame(height: 490)
@@ -113,28 +121,30 @@ struct HomeView: View {
                         
                       
                         HeaderLabel(headerLabel: "Shop by category")
-                        if (homeViewModel.categoryModel.isEmpty ){
-                            ProgressView()
-                        } else {
                             LazyVGrid(columns: columns, spacing: 5) {
-                                ForEach(Array(homeViewModel.categoryModel.enumerated()),
-                                        id: \.element.id) { index, category in
-                                    let imageName = categoryImage.indices.contains(index)
-                                        ? categoryImage[index]
-                                        : "CategoryAccessories"
-                                    CategoryView(
-                                        category: category,
-                                        imgCategory: imageName
+                                if homeViewModel.categoryModel.isEmpty{
                                     
-                                    ).onTapGesture {
-                                        selectCat = category.name
-                                        isNavigate.toggle()
+                                }else{
+                                    ForEach(Array(homeViewModel.categoryModel.enumerated()),
+                                            id: \.element.id) { index, category in
+                                        let imageName = categoryImage.indices.contains(index)
+                                            ? categoryImage[index]
+                                            : "CategoryAccessories"
+                                        CategoryView(
+                                            category: category,
+                                            imgCategory: imageName
+                                        
+                                        ).onTapGesture {
+                                            selectCat = category.name
+                                            isNavigate.toggle()
+                                        }
                                     }
                                 }
+                                
                             }
 
                             
-                        }
+                        
                     }
                 }
             }.padding(.top,20).edgesIgnoringSafeArea(.top)
@@ -155,11 +165,9 @@ struct HomeView: View {
                 homeViewModel.fetchTopTrendingProducts()
                 homeViewModel.fetchCategories()
             Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { _ in
-                // 1. Check if the array has data to avoid division by zero
                 guard !homeViewModel.allBannerData.isEmpty else { return }
                 
                 withAnimation {
-                    // 2. Safely calculate the next index
                     currentIndex = (currentIndex + 1) % homeViewModel.allBannerData.count
                 }
             }

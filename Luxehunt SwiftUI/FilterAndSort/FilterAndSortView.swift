@@ -15,7 +15,7 @@ struct FilterAndSortView: View {
     @Binding var isDismiss:Bool
     @State private var showDesignerView = false
     @State private var selectedSort: String? = nil
-    @State private var selectedPrice: String? = nil
+    @State private var selectedPrices: Set<String> = []
     @State private var selectedDesigner: String? = nil
     
     
@@ -66,6 +66,7 @@ struct FilterAndSortView: View {
                                     FilterCell(filterName: filter, isSelectedFilter: selectedSort == filter)
                                         .onTapGesture {
                                             selectedSort = filter
+                                            
                                             print("Sort selected:", filter)
                                         }
                                 }
@@ -113,10 +114,14 @@ struct FilterAndSortView: View {
                             HStack{
                                 LazyVGrid(columns: priceColumns, spacing: 12) {
                                     ForEach(priceFilter, id: \.self) { filter in
-                                        FilterCell(filterName: filter, isSelectedFilter: selectedPrice == filter)
+                                        FilterCell(filterName: filter,
+                                        isSelectedFilter: selectedPrices.contains(filter))
                                             .onTapGesture {
-                                                selectedPrice = filter
-                                                print("Price selected:", filter)
+                                                if selectedPrices.contains(filter) {
+                                                                        selectedPrices.remove(filter)   // deselect
+                                                                    } else {
+                                                                        selectedPrices.insert(filter)   // select
+                                                                    }
                                             }
                                     }
                                     Spacer()
@@ -151,7 +156,7 @@ struct FilterAndSortView: View {
                     Button(action: {
                         print("Sort:", selectedSort ?? "None")
                         print("Designer:", selectedDesigner ?? "None")
-                        print("Price:", selectedPrice ?? "None")
+                        
                     }, label: {
                         Text("Apply Filter")
                             .foregroundColor(.white)

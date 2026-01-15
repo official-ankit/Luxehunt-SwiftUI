@@ -93,12 +93,12 @@ struct TrendingDealView: View {
             .background(Color.white)
             .cornerRadius(8)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.gray.opacity(0.4), lineWidth: 1)
             )
             
         }
-        .cornerRadius(8)
+        
     }
 }
 

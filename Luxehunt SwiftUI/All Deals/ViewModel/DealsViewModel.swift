@@ -70,7 +70,7 @@ class DealsViewModel: ObservableObject {
 
         // Search
         if let search = searchText, !search.isEmpty {
-            url += "&search=\(search)"
+            url += "&key_word=\(search)"
         }
 
         // Sort Brand

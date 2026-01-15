@@ -21,7 +21,7 @@ struct CategoryView: View {
             }
             
             Color.black.opacity(0.5)
-             }.cornerRadius(16)
+             }.cornerRadius(8)
         .overlay{
             Text(category.name)
                 .font(.custom("PlayfairDisplay-Regular", size: 26))

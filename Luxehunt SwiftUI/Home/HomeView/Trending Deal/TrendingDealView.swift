@@ -19,7 +19,7 @@ struct TrendingDealView: View {
     var contImageHeight: CGFloat = 184
     var contFrameHeight: CGFloat = 252
     var constFrameWidht: CGFloat = UIScreen.main.bounds.width / 2 - 16
-
+    
     var body: some View {
         ZStack{
             VStack(alignment: .leading, spacing: 0) {
@@ -32,6 +32,7 @@ struct TrendingDealView: View {
                             height: contImageHeight
                         )
                         .clipped()
+                    
                         .overlay(content: {
                             if isLuxePass{
                                 ZStack{
@@ -45,11 +46,38 @@ struct TrendingDealView: View {
                                     }
                                 }.frame(width: 110,height: 79)
                                     .cornerRadius(8)
-
+                                
                             }
                             
-                                                        
                         })
+                        .overlay(alignment:.topTrailing){
+                            VStack(spacing: 8) {
+                                Button(action: {
+                                    print("Wishlist tapped")
+                                }) {
+                                    Image(systemName: "heart")
+                                        .foregroundColor(.black)
+                                        .frame(width: 36, height: 36)
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 2)
+                                        .padding(.top, 20)
+                                        .padding(.trailing,5)
+                                }
+                                
+                                Button(action: {
+                                    print("Share tapped")
+                                }) {
+                                    Image(systemName: "square.and.arrow.up")
+                                        .foregroundColor(.black)
+                                        .frame(width: 36, height: 36)
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 2)
+                                        .padding(.trailing,5)
+                                }
+                            }
+                        }
                 }placeholder: {
                     Color.gray.opacity(0.1)
                         .frame(
@@ -70,13 +98,13 @@ struct TrendingDealView: View {
                         Text("$\(lblOfferPrice,specifier: "%.0f")")
                             .font(.custom("Inter", size: 14))
                             .foregroundColor(.gray)
-                            
+                        
                             .strikethrough()
                         
                         Text("$\(lblPrice, specifier: "%.0f")")
                             .font(.custom("Inter", size: 14))
                             .foregroundColor(.black)
-                       
+                        
                         
                         Text("-\(lblDiscount, specifier: "%.0f")%")
                             .font(.custom("Inter", size: 14))

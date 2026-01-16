@@ -19,7 +19,7 @@ struct FilterCell: View {
 //                    .truncationMode(.tail)
                 .padding(.horizontal,10)
                 .padding(.vertical,10)
-                .background(isSelectedFilter ? Color.black : Color.white)
+                .background(isSelectedFilter ? Color.salesLabel : Color.white)
         }.overlay(content: {
             RoundedRectangle(cornerRadius: 4).stroke(Color.black, lineWidth: 1)
         })

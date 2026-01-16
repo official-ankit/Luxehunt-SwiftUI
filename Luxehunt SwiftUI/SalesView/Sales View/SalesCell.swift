@@ -19,8 +19,9 @@ struct SalesCell: View {
         ZStack{
             Color.white
             VStack(alignment: .center){
-                Text(lblsalesHeading)
+                Text(lblsalesHeading).foregroundColor(Color.salesLabel)
                     .font(.custom("PlayfairDisplay-Regular", size: 20))
+                
                     .padding(.top,0)
                     .padding(.bottom,5)
                     .padding(.horizontal,10)

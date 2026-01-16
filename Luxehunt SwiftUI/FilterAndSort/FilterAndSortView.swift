@@ -79,7 +79,7 @@ struct FilterAndSortView: View {
                         }.padding(.horizontal,10)
                             .padding(.vertical,20)
                     }.overlay(content: {
-                        RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 8).stroke(Color.salesLabel, lineWidth: 1)
                     })
                     ZStack{
                         VStack(alignment: .leading,spacing: 10){
@@ -109,7 +109,7 @@ struct FilterAndSortView: View {
                         }.padding(.horizontal,10)
                             .padding(.vertical,20)
                     }.overlay(content: {
-                        RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 8).stroke(Color.salesLabel, lineWidth: 1)
                     })
                     ZStack{
                         VStack(alignment: .leading,spacing: 10){
@@ -134,12 +134,9 @@ struct FilterAndSortView: View {
                         }.padding(.horizontal,10)
                             .padding(.vertical,20)
                     }.overlay(content: {
-                        RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 8).stroke(Color.salesLabel, lineWidth: 1)
                     })
                 }
-                
-                
-                
                 HStack {
                     Spacer()
                     Button(action: {
@@ -170,19 +167,13 @@ struct FilterAndSortView: View {
                             .background(Color.black)
                             .cornerRadius(4)
                     })
-                    
-                    
                 }
-                
                 .frame(height: 45)
-                
                 Spacer()
-                
             }.padding(.horizontal,20)
                 .onAppear{
                     filterViewModel.postRequestBrnad()
-                }
-            
+                }  
         }
     }
     private func mapSortToAPI(_ sort: String?) -> String? {
